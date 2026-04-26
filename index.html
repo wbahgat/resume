@@ -1,0 +1,1757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wael Bahgat — Principal Software Engineer</title>
+  <meta name="description" content="Wael Bahgat's resume portfolio, featuring server-side C++ architecture, satellite communications, telecom systems, aviation surveillance, and autonomous systems.">
+  <meta name="theme-color" content="#09090f">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #09090f;
+      --panel: rgba(255, 255, 255, .08);
+      --panel-strong: rgba(255, 255, 255, .14);
+      --text: #f8fafc;
+      --muted: #a7b0c0;
+      --line: rgba(255, 255, 255, .16);
+      --hot: #38bdf8;
+      --violet: #2563eb;
+      --cyan: #22d3ee;
+      --gold: #facc15;
+      --green: #34d399;
+      --shadow: 0 28px 90px rgba(0, 0, 0, .46);
+      --radius-xl: 34px;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --max: 1180px;
+      --ease: cubic-bezier(.22, 1, .36, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      font-family: Inter, system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 8% 8%, rgba(56, 189, 248, .18), transparent 30%),
+        radial-gradient(circle at 86% 2%, rgba(34, 211, 238, .16), transparent 32%),
+        radial-gradient(circle at 50% 82%, rgba(37, 99, 235, .22), transparent 35%),
+        var(--bg);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    body[data-theme="light"] {
+      --bg: #f8fafc;
+      --text: #0f172a;
+      --muted: #475569;
+      --line: rgba(15,23,42,.12);
+      --shadow: 0 28px 90px rgba(15, 23, 42, .12);
+      background:
+        radial-gradient(circle at 8% 8%, rgba(14, 165, 233, .16), transparent 30%),
+        radial-gradient(circle at 86% 2%, rgba(37, 99, 235, .12), transparent 32%),
+        radial-gradient(circle at 50% 82%, rgba(52, 211, 153, .12), transparent 35%),
+        var(--bg);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.9), transparent 78%);
+      z-index: -2;
+    }
+
+    body[data-theme="light"]::before {
+      background-image:
+        linear-gradient(rgba(15,23,42,.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15,23,42,.055) 1px, transparent 1px);
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at 50% 0, transparent, rgba(0,0,0,.62) 72%);
+      z-index: -1;
+    }
+
+    body[data-theme="light"]::after {
+      background: radial-gradient(circle at 50% 0, transparent, rgba(248,250,252,.78) 76%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+
+    .wrap { width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      opacity: .14;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.42'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+      z-index: 10;
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 999px;
+      filter: blur(10px);
+      opacity: .75;
+      pointer-events: none;
+      animation: float 14s var(--ease) infinite alternate;
+      z-index: -1;
+    }
+
+    .orb.one {
+      width: 380px;
+      height: 380px;
+      left: -90px;
+      top: 16vh;
+      background: radial-gradient(circle, rgba(56,189,248,.3), transparent 68%);
+    }
+
+    .orb.two {
+      width: 460px;
+      height: 460px;
+      right: -130px;
+      top: 8vh;
+      background: radial-gradient(circle, rgba(34,211,238,.26), transparent 68%);
+      animation-delay: -4s;
+    }
+
+    .orb.three {
+      width: 360px;
+      height: 360px;
+      right: 18vw;
+      bottom: -90px;
+      background: radial-gradient(circle, rgba(250,204,21,.18), transparent 68%);
+      animation-delay: -8s;
+    }
+
+    @keyframes float {
+      from { transform: translate3d(0, 0, 0) scale(1); }
+      to { transform: translate3d(40px, -32px, 0) scale(1.08); }
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(24px);
+      background: linear-gradient(180deg, rgba(9,9,15,.82), rgba(9,9,15,.42));
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    body[data-theme="light"] .nav {
+      background: linear-gradient(180deg, rgba(248,250,252,.88), rgba(248,250,252,.62));
+      border-bottom-color: rgba(15,23,42,.1);
+    }
+
+    .nav-inner {
+      height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      letter-spacing: -.04em;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 15px;
+      display: grid;
+      place-items: center;
+      background: conic-gradient(from 180deg, var(--cyan), var(--violet), var(--green), var(--cyan));
+      box-shadow: 0 14px 34px rgba(34,211,238,.28);
+    }
+
+    .brand-mark::after {
+      content: "WB";
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(9, 9, 15, .82);
+      color: #fff;
+      font-size: .68rem;
+      letter-spacing: -.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      color: rgba(248,250,252,.72);
+      font-size: .9rem;
+      font-weight: 700;
+    }
+
+    .nav-links a:hover { color: #fff; }
+    body[data-theme="light"] .nav-links { color: rgba(15,23,42,.66); }
+    body[data-theme="light"] .nav-links a:hover { color: #0f172a; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 999px;
+      padding: 12px 18px;
+      color: #fff;
+      background: rgba(255,255,255,.08);
+      font-weight: 800;
+      box-shadow: 0 12px 32px rgba(0,0,0,.22);
+      transition: transform .22s var(--ease), border-color .22s var(--ease), background .22s var(--ease);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,.42);
+      background: rgba(255,255,255,.13);
+    }
+
+    .btn-primary {
+      border: 0;
+      background: linear-gradient(135deg, #0891b2, var(--violet) 52%, var(--green));
+      box-shadow: 0 18px 48px rgba(34,211,238,.22);
+    }
+
+    .theme-toggle {
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 999px;
+      padding: 10px 13px;
+      color: #fff;
+      background: rgba(255,255,255,.08);
+      cursor: pointer;
+      font-size: .82rem;
+      font-weight: 900;
+      transition: transform .22s var(--ease), background .22s var(--ease), border-color .22s var(--ease);
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,.38);
+      background: rgba(255,255,255,.14);
+    }
+
+    body[data-theme="light"] .btn {
+      color: #0f172a;
+      background: rgba(255,255,255,.78);
+      border-color: rgba(15,23,42,.14);
+      box-shadow: 0 12px 30px rgba(15,23,42,.1);
+    }
+
+    body[data-theme="light"] .btn-primary {
+      color: #fff;
+      background: linear-gradient(135deg, #0284c7, #2563eb 56%, #059669);
+    }
+
+    body[data-theme="light"] .theme-toggle {
+      color: #0f172a;
+      background: rgba(255,255,255,.78);
+      border-color: rgba(15,23,42,.14);
+    }
+
+    .hero {
+      position: relative;
+      padding: 88px 0 54px;
+      min-height: calc(100svh - 78px);
+      display: grid;
+      align-items: center;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.04fr .96fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 999px;
+      padding: 8px 13px;
+      color: rgba(248,250,252,.82);
+      background: rgba(255,255,255,.07);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
+      font-size: .78rem;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    body[data-theme="light"] .eyebrow,
+    body[data-theme="light"] .domain-pill {
+      color: #075985;
+      background: rgba(255,255,255,.76);
+      border-color: rgba(14,165,233,.22);
+      box-shadow: 0 14px 32px rgba(15,23,42,.09);
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--green);
+      box-shadow: 0 0 0 6px rgba(52,211,153,.12), 0 0 22px rgba(52,211,153,.82);
+    }
+
+    h1 {
+      margin-top: 18px;
+      font-size: clamp(2.75rem, 5.9vw, 6.4rem);
+      line-height: 1;
+      letter-spacing: -.075em;
+      font-weight: 900;
+      max-width: 12.4ch;
+    }
+
+    h1 .serif {
+      font-family: "Playfair Display", serif;
+      font-style: italic;
+      font-weight: 800;
+      letter-spacing: -.08em;
+      background: linear-gradient(105deg, #fff, #bfdbfe 40%, #67e8f9 80%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    body[data-theme="light"] h1 .serif {
+      background: linear-gradient(105deg, #0f172a, #2563eb 48%, #0891b2 88%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .lead {
+      margin-top: 24px;
+      max-width: 62ch;
+      color: var(--muted);
+      font-size: clamp(1rem, 1.5vw, 1.16rem);
+    }
+
+    .hero-actions {
+      margin-top: 30px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .domain-strip {
+      margin-top: 22px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .domain-pill {
+      border: 1px solid rgba(125,211,252,.22);
+      border-radius: 999px;
+      padding: 9px 12px;
+      background: rgba(8,47,73,.34);
+      color: rgba(224,242,254,.92);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+      font-size: .8rem;
+      font-weight: 900;
+    }
+
+    .hero-stats {
+      margin-top: 34px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .stat-card {
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 20px;
+      padding: 16px;
+      background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(255,255,255,.045));
+      backdrop-filter: blur(18px);
+    }
+
+    body[data-theme="light"] .stat-card,
+    body[data-theme="light"] .card,
+    body[data-theme="light"] .expertise-tile,
+    body[data-theme="light"] .timeline-item,
+    body[data-theme="light"] .project-card {
+      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.72));
+      border-color: rgba(15,23,42,.1);
+      box-shadow: 0 18px 54px rgba(15,23,42,.1);
+    }
+
+    body[data-theme="light"] .stat-card span,
+    body[data-theme="light"] .card p,
+    body[data-theme="light"] .card li,
+    body[data-theme="light"] .expertise-tile p,
+    body[data-theme="light"] .portrait-copy p {
+      color: rgba(15,23,42,.68);
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: clamp(1.3rem, 2.5vw, 2.2rem);
+      line-height: 1;
+      letter-spacing: -.05em;
+    }
+
+    .stat-card span {
+      display: block;
+      margin-top: 7px;
+      color: rgba(248,250,252,.62);
+      font-size: .82rem;
+      font-weight: 700;
+    }
+
+    .portrait-card {
+      position: relative;
+      min-height: 620px;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      background:
+        linear-gradient(160deg, rgba(255,255,255,.16), rgba(255,255,255,.04)),
+        radial-gradient(circle at 35% 22%, rgba(56,189,248,.22), transparent 30%),
+        radial-gradient(circle at 70% 68%, rgba(34,211,238,.24), transparent 30%),
+        rgba(255,255,255,.06);
+      box-shadow: var(--shadow);
+      isolation: isolate;
+    }
+
+    body[data-theme="light"] .portrait-card {
+      background:
+        linear-gradient(160deg, rgba(255,255,255,.9), rgba(255,255,255,.58)),
+        radial-gradient(circle at 35% 22%, rgba(14,165,233,.18), transparent 30%),
+        radial-gradient(circle at 70% 68%, rgba(37,99,235,.14), transparent 30%),
+        rgba(255,255,255,.72);
+      border-color: rgba(15,23,42,.1);
+    }
+
+    .portrait-card::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 26px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .portrait-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -20% -24% -20%;
+      height: 56%;
+      background: linear-gradient(180deg, transparent, rgba(9,9,15,.72) 42%, rgba(9,9,15,.94));
+      z-index: 1;
+    }
+
+    body[data-theme="light"] .portrait-card::after {
+      background: linear-gradient(180deg, transparent, rgba(248,250,252,.72) 42%, rgba(248,250,252,.94));
+    }
+
+    @property --angle {
+      syntax: "<angle>";
+      inherits: false;
+      initial-value: 0deg;
+    }
+
+    @keyframes spin {
+      to { --angle: 360deg; }
+    }
+
+    @keyframes cursorBlink {
+      0%, 45% { opacity: 1; }
+      46%, 100% { opacity: 0; }
+    }
+
+    .portrait-copy {
+      position: absolute;
+      z-index: 3;
+      left: 34px;
+      right: 34px;
+      bottom: 34px;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 18px;
+      padding: 14px 16px 16px;
+      background: linear-gradient(145deg, rgba(15,23,42,.58), rgba(15,23,42,.32));
+      backdrop-filter: blur(10px);
+      box-shadow: 0 14px 26px rgba(0,0,0,.22);
+    }
+
+    .systems-board {
+      position: absolute;
+      z-index: 3;
+      inset: 44px 34px 194px;
+      border: 1px solid rgba(125,211,252,.26);
+      border-radius: 24px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 72% 18%, rgba(56,189,248,.24), transparent 36%),
+        radial-gradient(circle at 14% 84%, rgba(167,139,250,.24), transparent 38%),
+        linear-gradient(155deg, rgba(15,23,42,.82), rgba(2,6,23,.64));
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.16),
+        inset 0 0 80px rgba(56,189,248,.08),
+        0 26px 42px rgba(2,6,23,.3);
+      padding: 16px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 12px;
+    }
+
+    .systems-board::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(125,211,252,.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(125,211,252,.12) 1px, transparent 1px);
+      background-size: 24px 24px;
+      mask-image: radial-gradient(ellipse at center, rgba(0,0,0,.76), transparent 84%);
+      opacity: .38;
+      pointer-events: none;
+    }
+
+    .systems-board::after {
+      content: "";
+      position: absolute;
+      inset: -30% -20%;
+      background: conic-gradient(from 180deg, transparent 0deg, rgba(56,189,248,.14) 92deg, transparent 168deg, rgba(167,139,250,.12) 236deg, transparent 360deg);
+      filter: blur(16px);
+      animation: boardSweep 12s linear infinite;
+      pointer-events: none;
+    }
+
+    .board-head {
+      position: relative;
+      z-index: 2;
+      border: 1px solid rgba(186,230,253,.24);
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: rgba(2,6,23,.5);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .board-title {
+      font-size: .82rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #e0f2fe;
+      font-weight: 900;
+    }
+
+    .board-pill {
+      border: 1px solid rgba(134,239,172,.34);
+      border-radius: 999px;
+      padding: 4px 9px;
+      color: rgba(220,252,231,.92);
+      background: rgba(21,128,61,.18);
+      font-size: .64rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .board-grid {
+      position: relative;
+      z-index: 3;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      align-content: center;
+    }
+
+    .domain-chip {
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 12px;
+      padding: 10px;
+      background: linear-gradient(145deg, rgba(15,23,42,.86), rgba(30,41,59,.68));
+      color: rgba(224,242,254,.96);
+      font-size: .67rem;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      box-shadow: 0 12px 22px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.08);
+      white-space: normal;
+      line-height: 1.25;
+    }
+
+    .domain-chip::before {
+      content: "";
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #67e8f9;
+      display: inline-block;
+      margin-right: 6px;
+      box-shadow: 0 0 9px rgba(103,232,249,.76);
+      vertical-align: 1px;
+    }
+
+    .domain-chip.one,
+    .domain-chip.four { border-color: rgba(56,189,248,.34); }
+    .domain-chip.two,
+    .domain-chip.five { border-color: rgba(167,139,250,.36); }
+    .domain-chip.three,
+    .domain-chip.six { border-color: rgba(34,197,94,.32); }
+
+    .board-foot {
+      position: relative;
+      z-index: 2;
+      border-top: 1px dashed rgba(134,239,172,.24);
+      padding-top: 10px;
+      color: rgba(220,252,231,.84);
+      font-size: .68rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    @keyframes boardSweep {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    body[data-theme="light"] .systems-board {
+      border-color: rgba(14,165,233,.24);
+      background:
+        radial-gradient(circle at 68% 22%, rgba(56,189,248,.18), transparent 34%),
+        radial-gradient(circle at 22% 76%, rgba(167,139,250,.14), transparent 36%),
+        linear-gradient(155deg, rgba(255,255,255,.92), rgba(240,249,255,.78));
+    }
+
+    body[data-theme="light"] .systems-board::before {
+      opacity: .34;
+    }
+
+    body[data-theme="light"] .board-title {
+      color: #0f172a;
+    }
+
+    body[data-theme="light"] .board-pill {
+      color: #166534;
+      background: rgba(22,163,74,.12);
+      border-color: rgba(22,163,74,.24);
+    }
+
+    body[data-theme="light"] .domain-chip {
+      border-color: rgba(14,165,233,.24);
+      background: linear-gradient(145deg, rgba(255,255,255,.96), rgba(240,249,255,.92));
+      color: #0369a1;
+    }
+
+    body[data-theme="light"] .board-head {
+      background: rgba(255,255,255,.78);
+      border-color: rgba(14,165,233,.2);
+    }
+
+    body[data-theme="light"] .board-foot {
+      color: rgba(3,105,161,.84);
+      border-top-color: rgba(14,165,233,.24);
+    }
+
+    body[data-theme="light"] .portrait-copy {
+      border-color: rgba(15,23,42,.12);
+      background: linear-gradient(145deg, rgba(255,255,255,.94), rgba(255,255,255,.76));
+      box-shadow: 0 14px 24px rgba(15,23,42,.12);
+    }
+
+    .portrait-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .68rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(125,211,252,.86);
+      font-weight: 900;
+    }
+
+    .portrait-kicker::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #67e8f9;
+      box-shadow: 0 0 12px rgba(103,232,249,.7);
+    }
+
+    body[data-theme="light"] .portrait-kicker {
+      color: #0284c7;
+    }
+
+    .portrait-copy h2 {
+      font-size: clamp(1.45rem, 2.6vw, 2.35rem);
+      line-height: 1.04;
+      letter-spacing: -.05em;
+    }
+
+    .portrait-copy p {
+      margin-top: 12px;
+      color: rgba(248,250,252,.68);
+    }
+
+    section {
+      padding: 74px 0;
+      position: relative;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 26px;
+      margin-bottom: 26px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(2rem, 4vw, 4.4rem);
+      line-height: .96;
+      letter-spacing: -.07em;
+      max-width: 11ch;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      max-width: 52ch;
+    }
+
+    .expertise-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .expertise-tile {
+      border: 1px solid rgba(125,211,252,.16);
+      border-radius: 20px;
+      padding: 16px;
+      background:
+        linear-gradient(180deg, rgba(14,165,233,.12), rgba(255,255,255,.045)),
+        rgba(255,255,255,.035);
+      box-shadow: 0 16px 38px rgba(0,0,0,.18);
+      min-height: 156px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .expertise-tile::after {
+      content: "";
+      position: absolute;
+      inset: auto -20% -45% -20%;
+      height: 70%;
+      background: radial-gradient(circle, rgba(34,211,238,.16), transparent 68%);
+      pointer-events: none;
+    }
+
+    .expertise-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 15px;
+      display: grid;
+      place-items: center;
+      color: #bae6fd;
+      background: rgba(8,47,73,.5);
+      border: 1px solid rgba(125,211,252,.18);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 14px 30px rgba(0,0,0,.2);
+      position: relative;
+      z-index: 1;
+    }
+
+    body[data-theme="light"] .expertise-icon {
+      color: #0369a1;
+      background: rgba(224,242,254,.86);
+      border-color: rgba(14,165,233,.2);
+    }
+
+    .expertise-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .expertise-tile h3 {
+      margin-top: 14px;
+      font-size: .96rem;
+      line-height: 1.15;
+      letter-spacing: -.03em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .expertise-tile p {
+      margin-top: 8px;
+      color: rgba(248,250,252,.62);
+      font-size: .8rem;
+      line-height: 1.5;
+      position: relative;
+      z-index: 1;
+    }
+
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+    }
+
+    .card {
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: var(--radius-lg);
+      padding: clamp(20px, 2.6vw, 30px);
+      background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(255,255,255,.045));
+      box-shadow: 0 18px 54px rgba(0,0,0,.2);
+      backdrop-filter: blur(18px);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 18% 0, rgba(255,255,255,.16), transparent 36%);
+      pointer-events: none;
+    }
+
+    .span-7 { grid-column: span 7; }
+    .span-5 { grid-column: span 5; }
+    .span-4 { grid-column: span 4; }
+    .span-6 { grid-column: span 6; }
+
+    .card h3 {
+      position: relative;
+      font-size: 1.2rem;
+      letter-spacing: -.03em;
+      margin-bottom: 10px;
+    }
+
+    .card p, .card li {
+      position: relative;
+      color: rgba(248,250,252,.68);
+    }
+
+    .skill-cloud {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .chip {
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 999px;
+      padding: 8px 11px;
+      background: rgba(255,255,255,.07);
+      color: rgba(248,250,252,.84);
+      font-size: .82rem;
+      font-weight: 800;
+    }
+
+    body[data-theme="light"] .chip,
+    body[data-theme="light"] .project-link,
+    body[data-theme="light"] .prompt {
+      color: #0f172a;
+      background: rgba(255,255,255,.8);
+      border-color: rgba(15,23,42,.12);
+    }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 18px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 20px;
+      padding: 18px;
+      background: rgba(255,255,255,.055);
+    }
+
+    .timeline-date {
+      color: var(--cyan);
+      font-size: .84rem;
+      font-weight: 900;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .timeline-item h3 { margin-bottom: 5px; }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .project-subhead {
+      margin: 28px 0 14px;
+      color: rgba(248,250,252,.82);
+      font-size: .82rem;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .project-card {
+      min-height: 250px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .project-card .number {
+      color: rgba(248,250,252,.32);
+      font-size: .82rem;
+      font-weight: 900;
+      letter-spacing: .12em;
+    }
+
+    .project-links {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .project-link {
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 999px;
+      padding: 8px 11px;
+      background: rgba(255,255,255,.08);
+      color: rgba(248,250,252,.9);
+      font-size: .78rem;
+      font-weight: 900;
+      transition: transform .22s var(--ease), border-color .22s var(--ease), background .22s var(--ease);
+    }
+
+    .project-link:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,.38);
+      background: rgba(255,255,255,.14);
+    }
+
+    .project-card:nth-child(1) { background: linear-gradient(145deg, rgba(255,78,205,.18), rgba(255,255,255,.055)); }
+    .project-card:nth-child(2) { background: linear-gradient(145deg, rgba(34,211,238,.18), rgba(255,255,255,.055)); }
+    .project-card:nth-child(3) { background: linear-gradient(145deg, rgba(250,204,21,.16), rgba(255,255,255,.055)); }
+    .project-card:nth-child(4) { background: linear-gradient(145deg, rgba(52,211,153,.16), rgba(255,255,255,.055)); }
+
+    .chat-shell {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      width: min(420px, calc(100vw - 44px));
+      z-index: 30;
+    }
+
+    .chat-panel {
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 28px;
+      overflow: hidden;
+      background: rgba(9,9,15,.78);
+      backdrop-filter: blur(28px);
+      box-shadow: 0 28px 90px rgba(0,0,0,.52);
+      transform-origin: bottom right;
+      transition: transform .28s var(--ease), opacity .28s var(--ease);
+    }
+
+    body[data-theme="light"] .chat-panel {
+      background: rgba(248,250,252,.9);
+      border-color: rgba(15,23,42,.12);
+      box-shadow: 0 28px 90px rgba(15,23,42,.16);
+    }
+
+    body[data-theme="light"] .chat-head {
+      background: linear-gradient(135deg, rgba(14,165,233,.14), rgba(37,99,235,.08));
+      border-bottom-color: rgba(15,23,42,.1);
+    }
+
+    body[data-theme="light"] .chat-person span,
+    body[data-theme="light"] footer {
+      color: rgba(15,23,42,.56);
+    }
+
+    body[data-theme="light"] .msg.bot {
+      color: rgba(15,23,42,.82);
+      background: rgba(255,255,255,.78);
+      border-color: rgba(15,23,42,.1);
+    }
+
+    body[data-theme="light"] .chat-form {
+      background: rgba(255,255,255,.56);
+      border-top-color: rgba(15,23,42,.1);
+    }
+
+    body[data-theme="light"] .chat-form input {
+      color: #0f172a;
+      background: rgba(255,255,255,.88);
+      border-color: rgba(15,23,42,.12);
+    }
+
+    .chat-shell.is-collapsed .chat-panel {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(20px) scale(.96);
+    }
+
+    .chat-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+      background: linear-gradient(135deg, rgba(255,78,205,.18), rgba(34,211,238,.12));
+    }
+
+    .chat-person {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .chat-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 15px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--hot), var(--violet), var(--cyan));
+      font-weight: 900;
+      box-shadow: 0 12px 28px rgba(139,92,246,.32);
+    }
+
+    .chat-person strong {
+      display: block;
+      line-height: 1.1;
+    }
+
+    .chat-person span {
+      display: block;
+      color: rgba(248,250,252,.58);
+      font-size: .78rem;
+      font-weight: 700;
+    }
+
+    .icon-btn {
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 12px;
+      width: 36px;
+      height: 36px;
+      color: #fff;
+      background: rgba(255,255,255,.08);
+      cursor: pointer;
+    }
+
+    .chat-log {
+      height: 360px;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .msg {
+      max-width: 86%;
+      border-radius: 18px;
+      padding: 11px 13px;
+      font-size: .9rem;
+      line-height: 1.5;
+    }
+
+    .msg.bot {
+      align-self: flex-start;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.075);
+      color: rgba(248,250,252,.86);
+    }
+
+    .msg.user {
+      align-self: flex-end;
+      background: linear-gradient(135deg, var(--violet), var(--cyan));
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .quick-prompts {
+      display: flex;
+      gap: 8px;
+      padding: 0 16px 14px;
+      flex-wrap: wrap;
+    }
+
+    .prompt {
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 999px;
+      padding: 8px 10px;
+      color: rgba(248,250,252,.78);
+      background: rgba(255,255,255,.065);
+      cursor: pointer;
+      font-size: .76rem;
+      font-weight: 800;
+    }
+
+    .chat-form {
+      display: flex;
+      gap: 10px;
+      padding: 14px;
+      border-top: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.045);
+    }
+
+    .chat-form input {
+      min-width: 0;
+      flex: 1;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 999px;
+      padding: 12px 14px;
+      color: #fff;
+      background: rgba(255,255,255,.08);
+      outline: 0;
+    }
+
+    .chat-form input::placeholder { color: rgba(248,250,252,.42); }
+
+    .chat-form button {
+      border: 0;
+      border-radius: 999px;
+      padding: 0 16px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--hot), var(--violet));
+      cursor: pointer;
+      font-weight: 900;
+    }
+
+    .chat-toggle {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      border: 0;
+      border-radius: 999px;
+      padding: 15px 18px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--hot), var(--violet), var(--cyan));
+      box-shadow: 0 18px 48px rgba(139,92,246,.42);
+      cursor: pointer;
+      font-weight: 900;
+      transition: transform .22s var(--ease), opacity .22s var(--ease);
+    }
+
+    .chat-shell:not(.is-collapsed) .chat-toggle {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .7s var(--ease), transform .7s var(--ease);
+    }
+
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    footer {
+      padding: 54px 0 120px;
+      color: rgba(248,250,252,.48);
+      text-align: center;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .portrait-card { min-height: 540px; }
+      .systems-board { inset: 32px 22px 178px; }
+      .domain-chip { font-size: .61rem; padding: 8px; }
+      .board-grid { gap: 8px; }
+      .section-head { display: block; }
+      .section-head p { margin-top: 12px; }
+      .expertise-grid { grid-template-columns: repeat(2, 1fr); }
+      .span-7, .span-5, .span-4, .span-6 { grid-column: span 12; }
+      .project-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .wrap { width: min(100% - 28px, var(--max)); }
+      .nav-links { display: none; }
+      .hero { padding-top: 54px; }
+      .hero-stats { grid-template-columns: 1fr; }
+      .portrait-card { min-height: 470px; }
+      .systems-board { inset: 20px 14px 170px; border-radius: 20px; }
+      .board-grid { grid-template-columns: 1fr; }
+      .domain-chip { font-size: .58rem; padding: 7px; letter-spacing: .05em; }
+      .board-head { padding: 8px 10px; }
+      .board-foot { font-size: .62rem; }
+      .portrait-copy { left: 18px; right: 18px; bottom: 18px; }
+      .expertise-grid { grid-template-columns: 1fr; }
+      .timeline-item { grid-template-columns: 1fr; }
+      .chat-shell { right: 14px; bottom: 14px; width: calc(100vw - 28px); }
+      .chat-log { height: 310px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="orb one" aria-hidden="true"></div>
+  <div class="orb two" aria-hidden="true"></div>
+  <div class="orb three" aria-hidden="true"></div>
+
+  <nav class="nav" aria-label="Main navigation">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top" aria-label="Digital resume home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span data-profile="name">Wael Bahgat</span>
+      </a>
+      <div class="nav-links">
+        <a href="#story">Systems Profile</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Domains</a>
+        <a href="#digital-me">Ask Wael</a>
+      </div>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light mode">Light</button>
+      <a class="btn btn-primary" href="mailto:hello@example.com" data-profile-href="email">Contact</a>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy reveal">
+          <span class="eyebrow">Mission-Critical Server-Side Engineering</span>
+          <h1>Reliable systems for <span class="serif">demanding domains.</span></h1>
+          <p class="lead" data-profile="summary">Principal Software Engineer with 15+ years building scalable, high-performance server-side and systems software across telecom, aerospace, aviation surveillance, unmanned aerial vehicle systems, autonomous navigation, and satellite communications.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#digital-me">Ask Wael</a>
+            <a class="btn" href="#projects">Explore Systems Work</a>
+          </div>
+          <div class="domain-strip" aria-label="Professional domains">
+            <span class="domain-pill">Satellite GSM/LTE</span>
+            <span class="domain-pill">Telecom Billing</span>
+            <span class="domain-pill">Aviation Surveillance</span>
+            <span class="domain-pill">UAV / Drone Systems</span>
+            <span class="domain-pill">Autonomous Navigation</span>
+          </div>
+          <div class="hero-stats" aria-label="Career highlights">
+            <div class="stat-card">
+              <strong data-profile="years">10+</strong>
+              <span>Years in critical systems</span>
+            </div>
+            <div class="stat-card">
+              <strong data-profile="projectsCount">5</strong>
+              <span>Mission domains</span>
+            </div>
+            <div class="stat-card">
+              <strong data-profile="focus">C++</strong>
+              <span>Core discipline</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="portrait-card reveal" aria-label="Systems engineering diagram">
+          <div class="systems-board" aria-hidden="true">
+            <div class="board-head">
+              <div class="board-title">Systems Architecture</div>
+              <div class="board-pill">Live Profile</div>
+            </div>
+            <div class="board-grid">
+              <div class="domain-chip one">OOD Design</div>
+              <div class="domain-chip two">SOLID Principles</div>
+              <div class="domain-chip three">Thread Pools</div>
+              <div class="domain-chip four">Async Programming</div>
+              <div class="domain-chip five">Plugin Architecture</div>
+              <div class="domain-chip six">Production Debugging</div>
+            </div>
+            <div class="board-foot">
+              <span>Telecom</span>
+              <span>Satellite</span>
+              <span>UAV</span>
+              <span>Navigation</span>
+            </div>
+          </div>
+          <div class="portrait-copy">
+            <div class="portrait-kicker">Systems Profile</div>
+            <h2 data-profile="role">Principal Software Engineer</h2>
+            <p data-profile="tagline">C++ architecture, distributed backends, telecom platforms, autonomous systems, and satellite core networks.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="story">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2>Reliable software for constrained domains.</h2>
+          <p>A senior engineering profile shaped by telecom, aerospace, aviation surveillance, autonomous navigation, UAV systems, and satellite communications.</p>
+        </div>
+        <div class="expertise-grid reveal" aria-label="Core engineering experience visuals">
+          <article class="expertise-tile">
+            <div class="expertise-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M4 17c4-4 12-4 16 0"/>
+                <path d="M7 14c2.7-2.4 7.3-2.4 10 0"/>
+                <path d="M10 11c1.2-.9 2.8-.9 4 0"/>
+                <path d="M12 18v3"/>
+                <path d="M9 21h6"/>
+              </svg>
+            </div>
+            <h3>Telecom Core Systems</h3>
+            <p>GSM/LTE, carrier billing, VOIP air traffic control, and high-volume production platforms.</p>
+          </article>
+          <article class="expertise-tile">
+            <div class="expertise-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 3l7 18-7-4-7 4 7-18z"/>
+                <path d="M12 3v14"/>
+                <path d="M8.5 18.5l3.5-1.5 3.5 1.5"/>
+              </svg>
+            </div>
+            <h3>Navigation & Autonomy</h3>
+            <p>Autonomous vessel navigation, hardware abstraction, runtime extensibility, and device modeling.</p>
+          </article>
+          <article class="expertise-tile">
+            <div class="expertise-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="4" y="4" width="6" height="6" rx="1.5"/>
+                <rect x="14" y="4" width="6" height="6" rx="1.5"/>
+                <rect x="9" y="14" width="6" height="6" rx="1.5"/>
+                <path d="M10 7h4"/>
+                <path d="M12 10v4"/>
+              </svg>
+            </div>
+            <h3>OOD & Patterns</h3>
+            <p>Modular frameworks, Composite modeling, plugin boundaries, and maintainable service layers.</p>
+          </article>
+          <article class="expertise-tile">
+            <div class="expertise-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M5 7h14"/>
+                <path d="M5 12h14"/>
+                <path d="M5 17h14"/>
+                <path d="M8 4v16"/>
+                <path d="M16 4v16"/>
+              </svg>
+            </div>
+            <h3>SOLID Architecture</h3>
+            <p>Open/Closed design, clean interfaces, isolated modules, and extensible runtime behavior.</p>
+          </article>
+          <article class="expertise-tile">
+            <div class="expertise-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M4 7h5l3 3h8"/>
+                <path d="M4 12h7l3 3h6"/>
+                <path d="M4 17h5l3-3h8"/>
+                <circle cx="4" cy="7" r="1.5"/>
+                <circle cx="4" cy="12" r="1.5"/>
+                <circle cx="4" cy="17" r="1.5"/>
+              </svg>
+            </div>
+            <h3>Multithreaded Services</h3>
+            <p>Thread pools, async processing, performance testing, profiling, and production debugging.</p>
+          </article>
+        </div>
+        <div class="bento">
+          <article class="card span-7 reveal">
+            <h3>Server-Side Professional Narrative</h3>
+            <p data-profile="narrative">Wael builds server-side and embedded-adjacent systems where reliability, performance, and maintainability matter. His professional work spans GSM/LTE satellite network components, aviation surveillance, unmanned aerial vehicle surveillance, autonomous surface vessel navigation, VOIP air traffic control communications, and high-volume telecom billing platforms for major carriers.</p>
+          </article>
+          <article class="card span-5 reveal">
+            <h3>Core Systems Skills</h3>
+            <p>The emphasis is server-side C++, reliability, architecture, testing, and domain-heavy engineering.</p>
+            <div class="skill-cloud" id="skill-cloud"></div>
+          </article>
+          <article class="card span-4 reveal">
+            <h3>Architecture Strength</h3>
+            <p data-profile="strengthOne">Designing modular C++ frameworks with SOLID principles, plugin boundaries, runtime extensibility, multithreading, asynchronous processing, and clean separation of core services.</p>
+          </article>
+          <article class="card span-4 reveal">
+            <h3>Delivery Style</h3>
+            <p data-profile="strengthTwo">Leading full lifecycle professional delivery across requirements, architecture, implementation, automated testing, deployment, sprint planning, production debugging, and client-critical support.</p>
+          </article>
+          <article class="card span-4 reveal">
+            <h3>Best Fit</h3>
+            <p data-profile="strengthThree">Teams building telecom, aerospace, autonomous, or other reliability-sensitive systems that need senior server-side architecture and hands-on delivery.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2>Experience in demanding domains.</h2>
+          <p>From high-volume telecom billing to satellite core network systems, the thread is reliable architecture under demanding constraints.</p>
+        </div>
+        <div class="timeline reveal" id="timeline"></div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2>Server-side work under pressure.</h2>
+          <p>The main thread is professional backend and systems engineering: telecom, satellite core networks, aviation surveillance, unmanned aerial vehicle systems, autonomous navigation, and production-grade C++ architecture.</p>
+        </div>
+        <h3 class="project-subhead reveal">Professional Systems</h3>
+        <div class="project-grid reveal" id="project-grid"></div>
+        <h3 class="project-subhead reveal">Personal Products</h3>
+        <div class="project-grid reveal" id="personal-project-grid"></div>
+      </div>
+    </section>
+
+    <section id="digital-me">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2>Ask Wael's profile.</h2>
+          <p>Visitors can ask about satellite core networks, telecom, UAV/drone systems, autonomous navigation, C++ architecture, testing, and contact details without digging through a PDF.</p>
+        </div>
+        <article class="card reveal">
+          <h3>How it works</h3>
+          <p>The assistant is powered by Wael's resume data and prioritizes professional server-side experience first, while still answering about personal products like Yalabeena when asked.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>Wael Bahgat — Principal Software Engineer focused on server-side C++, telecom, satellite communications, aviation surveillance, and autonomous systems.</p>
+    </div>
+  </footer>
+
+  <aside class="chat-shell" id="chat-shell" aria-label="Resume assistant chat">
+    <div class="chat-panel">
+      <div class="chat-head">
+        <div class="chat-person">
+          <div class="chat-avatar" data-profile="initials">YN</div>
+          <div>
+            <strong>Ask Wael</strong>
+            <span>Resume assistant</span>
+          </div>
+        </div>
+        <button class="icon-btn" id="close-chat" type="button" aria-label="Minimize chat">-</button>
+      </div>
+      <div class="chat-log" id="chat-log" aria-live="polite"></div>
+      <div class="quick-prompts" id="quick-prompts"></div>
+      <form class="chat-form" id="chat-form">
+        <input id="chat-input" type="text" placeholder="Ask about skills, projects, experience..." autocomplete="off">
+        <button type="submit">Send</button>
+      </form>
+    </div>
+    <button class="chat-toggle" id="open-chat" type="button">Ask Wael</button>
+  </aside>
+
+  <script>
+    const profile = {
+      name: "Wael Bahgat",
+      initials: "WB",
+      role: "Principal Software Engineer",
+      email: "mailto:wael.bahgat@gmail.com",
+      summary: "Principal Software Engineer with 15+ years building scalable, high-performance server-side and systems software across telecom, aerospace, aviation surveillance, unmanned aerial vehicle systems, autonomous navigation, and satellite communications.",
+      tagline: "C++ architecture, distributed backends, telecom platforms, autonomous systems, and satellite core networks.",
+      years: "15+",
+      projectsCount: "5",
+      focus: "C++",
+      narrative: "Wael builds server-side and embedded-adjacent systems where reliability, performance, and maintainability matter. His professional work spans GSM/LTE satellite network components, aviation surveillance, unmanned aerial vehicle surveillance, autonomous surface vessel navigation, VOIP air traffic control communications, and high-volume telecom billing platforms for major carriers.",
+      strengthOne: "Designing modular C++ frameworks with SOLID principles, plugin boundaries, runtime extensibility, multithreading, asynchronous processing, and clean separation of core services.",
+      strengthTwo: "Leading full lifecycle professional delivery across requirements, architecture, implementation, automated testing, deployment, sprint planning, production debugging, and client-critical support.",
+      strengthThree: "Solving hard reliability problems in telecom, aerospace, and autonomous systems: memory leaks, deadlocks, crashes, real-time data aggregation, database-backed workflows, and distributed deployments.",
+      skills: ["C++17", "C++", "Server-Side Architecture", "Object-Oriented Design", "SOLID Principles", "Design Patterns", "Plugin Architecture", "Qt", "Multithreading", "Thread Pools", "Asynchronous Processing", "REST APIs", "TCP Services", "Docker", "PostgreSQL", "MongoDB", "Oracle", "SQL", "Java", "PL/SQL", "GTest", "GCov", "TDD", "Performance Profiling", "gdb", "mdb", "CI/CD", "Telecom Systems", "GSM/LTE", "Satellite Communications", "Aviation Surveillance", "UAV / Drone Surveillance", "Autonomous Navigation", "VOIP Air Traffic Control", "Flutter", "Dart", "AWS ECS/Fargate", "Braintree"],
+      experience: [
+        {
+          date: "Dec 2023 - Present",
+          title: "Principal Software Engineer, Lead Developer, Core Network Team — Lynk Global",
+          body: "Leads architecture and implementation of server-side GSM/LTE core network components for satellite communications. Designed a modular C++ framework with plugin-based runtime flexibility, satellite deployment orchestration with Docker, centralized Postgres for stateless network nodes, async processing, thread pools, MongoDB/Postgres persistence, GTest, and GCov coverage."
+        },
+        {
+          date: "Sep 2021 - Dec 2023",
+          title: "Senior Software Specialist — L3Harris",
+          body: "Built core C++ components for aviation surveillance and mission-critical aerospace systems. Designed shared server/service frameworks with extendable application layers, configuration management, log management, thread pools, pluggable business logic, XML-driven configuration, GTest coverage, GCov analysis, TDD, and performance testing."
+        },
+        {
+          date: "Jul 2020 - Sep 2021",
+          title: "Development Team Lead, Lead Developer — Gibbs & Cox, a Leidos Company",
+          body: "Led development of an autonomous navigation system for surface vessels. Designed a modular Qt/C++ framework, applied the Composite pattern for hierarchical onboard devices, supported hardware abstraction and runtime extensibility, and drove requirements, architecture, implementation, testing, deployment, standups, and sprint planning."
+        },
+        {
+          date: "May 2016 - Jul 2020",
+          title: "Senior Software Specialist — L3Harris",
+          body: "Aggregated radar and ADS-B data in real time across multiple sites, built unmanned aerial vehicle/drone surveillance capabilities in C++/Qt, worked on VOIP air traffic control communications, and developed reusable C++ libraries with GTest coverage."
+        },
+        {
+          date: "Jan 2005 - Apr 2016",
+          title: "Lead and Senior Software Engineer — Openet Telecom",
+          body: "Delivered production hotfixes and patches in C++ and Java, diagnosed memory leaks, deadlocks, and crashes with gdb and mdb, coordinated critical client issues, and built full-stack telecom billing solutions for Verizon, AT&T, Sprint, and other major carriers using Java, PL/SQL, and high-volume Oracle databases."
+        }
+      ],
+      projects: [
+        {
+          title: "Satellite Core Network Framework",
+          body: "Modular C++ GSM/LTE architecture with plugin-based network modules, Dockerized multi-stage satellite deployments, centralized Postgres, async processing, thread pools, MongoDB session persistence, GTest, and GCov."
+        },
+        {
+          title: "Aviation and UAV Surveillance Systems",
+          body: "Server-side and C++/Qt components for aviation surveillance, real-time radar and ADS-B aggregation, unmanned aerial vehicle/drone surveillance workflows, VOIP air traffic control communications, reusable libraries, GTest coverage, and performance validation."
+        },
+        {
+          title: "Autonomous Navigation Platform",
+          body: "Modular Qt/C++ framework for autonomous surface vessel navigation with hierarchical onboard device modeling, Composite pattern architecture, hardware abstraction, runtime extensibility, requirements ownership, implementation, testing, and deployment leadership."
+        },
+        {
+          title: "Telecom Billing and Production Engineering",
+          body: "High-volume telecom billing platforms and production support for major carriers including Verizon, AT&T, and Sprint. Delivered C++/Java hotfixes, PL/SQL/Oracle solutions, architecture documents, performance specs, and deep debugging of leaks, deadlocks, and crashes with gdb and mdb."
+        }
+      ],
+      personalProjects: [
+        {
+          title: "Yalabeena / BMyGst Booking Platform",
+          body: "Personal full-stack session booking product, originally developed as BMyGst and now presented as Yalabeena. Built with Flutter web/mobile frontend, C++17 Drogon REST backend, plugin-based service modules, PostgreSQL, JWT sessions, host calendars, cart/checkout, credit ledger, refunds, Braintree reconciliation, Google Calendar/email integrations, admin tools, Dockerized environments, and pytest E2E coverage.",
+          links: [
+            { label: "www.yalabeena.com", url: "https://www.yalabeena.com/" },
+            { label: "Open App", url: "https://www.yalabeena.com/app" }
+          ]
+        }
+      ],
+      chat: {
+        intro: "Hi, I am Wael's resume assistant. Ask me about his server-side C++ architecture, satellite core network experience, telecom background, autonomous navigation work, UAV/drone surveillance projects, personal products, education, or contact details.",
+        experience: "Wael has 15+ years of professional engineering experience centered on server-side C++ and mission-critical systems. He currently leads GSM/LTE satellite core network work at Lynk Global. Previously he built aviation surveillance systems and UAV/drone surveillance capabilities at L3Harris, led autonomous surface vessel navigation at Gibbs & Cox, and delivered telecom billing and production engineering systems at Openet for major carriers.",
+        skills: "Wael's core professional skills are C++17/C++, server-side architecture, object-oriented design, SOLID principles, design patterns, plugin architecture, Qt, multithreading, thread pools, async processing, REST/TCP services, Docker, PostgreSQL, MongoDB, Oracle, Java, PL/SQL, GTest, GCov, TDD, CI/CD, gdb/mdb debugging, performance profiling, telecom systems, GSM/LTE, satellite communications, aviation surveillance, UAV/drone surveillance, autonomous navigation, and VOIP air traffic control systems.",
+        projects: "Professional highlights include a satellite core network framework at Lynk Global, aviation and UAV surveillance systems at L3Harris, autonomous navigation for surface vessels at Gibbs & Cox, VOIP air traffic control communications, and telecom billing platforms for Verizon, AT&T, Sprint, and other major carriers. Yalabeena, originally BMyGst, is Wael's personal full-stack product that demonstrates additional product ownership.",
+        yalabeena: "Yalabeena, originally BMyGst, is Wael's personal project, not the main professional thread. It demonstrates full-stack product ownership: Flutter web/mobile UI, Provider/go_router app structure, C++17 Drogon REST backend, plugin-based route modules, PostgreSQL persistence, JWT/session management, host calendars, cart/checkout, credits, refunds, Braintree reconciliation, Google Calendar/email integrations, Dockerized development, and pytest E2E coverage. Link: https://www.yalabeena.com/",
+        strengths: "Wael is strongest where architecture, performance, and reliability intersect: modular server-side C++ systems, plugin-based design, multithreaded services, autonomous/aviation/telecom domains, production debugging, test strategy, and full lifecycle technical leadership.",
+        education: "Wael holds an M.S. in Electrical Engineering from NYU Tandon School of Engineering, GPA 3.87, and a B.S. in Computer Engineering from Ain Shams University in Cairo.",
+        contact: "You can reach Wael at wael.bahgat@gmail.com or call 571-501-8996. He is based in Bethesda, Maryland."
+      }
+    };
+
+    const quickPrompts = [
+      "What is your experience?",
+      "What are your strongest skills?",
+      "Show me project highlights",
+      "Tell me about UAV and autonomous work",
+      "What does Yalabeena demonstrate?",
+      "Tell me about satellite work",
+      "What is your education?",
+      "How can I contact you?"
+    ];
+
+    function applyProfile() {
+      document.querySelectorAll("[data-profile]").forEach((el) => {
+        const key = el.dataset.profile;
+        if (profile[key]) el.textContent = profile[key];
+      });
+
+      document.querySelectorAll("[data-profile-href]").forEach((el) => {
+        const key = el.dataset.profileHref;
+        if (profile[key]) el.setAttribute("href", profile[key]);
+      });
+
+      document.getElementById("skill-cloud").innerHTML = profile.skills
+        .map((skill) => `<span class="chip">${escapeHtml(skill)}</span>`)
+        .join("");
+
+      document.getElementById("timeline").innerHTML = profile.experience
+        .map((item) => `
+          <article class="timeline-item">
+            <div class="timeline-date">${escapeHtml(item.date)}</div>
+            <div>
+              <h3>${escapeHtml(item.title)}</h3>
+              <p>${escapeHtml(item.body)}</p>
+            </div>
+          </article>
+        `)
+        .join("");
+
+      document.getElementById("project-grid").innerHTML = profile.projects
+        .map((project, index) => `
+          <article class="card project-card">
+            <span class="number">0${index + 1}</span>
+            <div>
+              <h3>${escapeHtml(project.title)}</h3>
+              <p>${escapeHtml(project.body)}</p>
+              ${renderProjectLinks(project.links)}
+            </div>
+          </article>
+        `)
+        .join("");
+
+      document.getElementById("personal-project-grid").innerHTML = profile.personalProjects
+        .map((project, index) => `
+          <article class="card project-card">
+            <span class="number">P0${index + 1}</span>
+            <div>
+              <h3>${escapeHtml(project.title)}</h3>
+              <p>${escapeHtml(project.body)}</p>
+              ${renderProjectLinks(project.links)}
+            </div>
+          </article>
+        `)
+        .join("");
+    }
+
+    function renderProjectLinks(links = []) {
+      if (!links.length) return "";
+      return `
+        <div class="project-links">
+          ${links.map((link) => `
+            <a class="project-link" href="${escapeAttribute(link.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.label)}</a>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function escapeAttribute(value) {
+      return escapeHtml(value).replaceAll("`", "&#096;");
+    }
+
+    const chatLog = document.getElementById("chat-log");
+    const chatForm = document.getElementById("chat-form");
+    const chatInput = document.getElementById("chat-input");
+    const promptWrap = document.getElementById("quick-prompts");
+    const chatShell = document.getElementById("chat-shell");
+    const themeToggle = document.getElementById("theme-toggle");
+
+    function applyTheme(theme) {
+      const selected = theme === "light" ? "light" : "dark";
+      document.body.dataset.theme = selected;
+      themeToggle.textContent = selected === "light" ? "Dark" : "Light";
+      themeToggle.setAttribute("aria-label", selected === "light" ? "Switch to dark mode" : "Switch to light mode");
+      localStorage.setItem("resume_theme", selected);
+    }
+
+    themeToggle.addEventListener("click", () => {
+      applyTheme(document.body.dataset.theme === "light" ? "dark" : "light");
+    });
+
+
+    function addMessage(text, type = "bot") {
+      const bubble = document.createElement("div");
+      bubble.className = `msg ${type}`;
+      bubble.textContent = text;
+      chatLog.appendChild(bubble);
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }
+
+    function answerFor(question) {
+      const q = question.toLowerCase();
+      if (q.includes("experience") || q.includes("work") || q.includes("role")) return profile.chat.experience;
+      if (q.includes("skill") || q.includes("stack") || q.includes("tool")) return profile.chat.skills;
+      if (q.includes("yalabeena") || q.includes("waseala") || q.includes("booking") || q.includes("calendar") || q.includes("credit") || q.includes("braintree") || q.includes("flutter") || q.includes("link")) return profile.chat.yalabeena;
+      if (q.includes("uav") || q.includes("drone") || q.includes("unmanned") || q.includes("autonomous") || q.includes("navigation") || q.includes("automation")) return "Wael led and built professional autonomous and unmanned systems work: autonomous surface vessel navigation at Gibbs & Cox using a modular Qt/C++ framework, Composite-pattern device modeling, hardware abstraction, and runtime extensibility; plus UAV/drone surveillance and real-time radar/ADS-B aggregation at L3Harris using C++/Qt and reusable tested libraries.";
+      if (q.includes("project") || q.includes("achievement") || q.includes("built")) return profile.chat.projects;
+      if (q.includes("satellite") || q.includes("gsm") || q.includes("lte") || q.includes("network")) return profile.chat.projects;
+      if (q.includes("education") || q.includes("degree") || q.includes("school") || q.includes("university")) return profile.chat.education;
+      if (q.includes("strength") || q.includes("why") || q.includes("fit")) return profile.chat.strengths;
+      if (q.includes("contact") || q.includes("email") || q.includes("hire") || q.includes("reach")) return profile.chat.contact;
+      return "Great question. I can answer best about experience, skills, projects, strengths, and contact details. Once the resume content is added, my answers become specific to the candidate.";
+    }
+
+    function askDigitalMe(question) {
+      addMessage(question, "user");
+      window.setTimeout(() => addMessage(answerFor(question), "bot"), 280);
+    }
+
+    quickPrompts.forEach((prompt) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "prompt";
+      button.textContent = prompt;
+      button.addEventListener("click", () => askDigitalMe(prompt));
+      promptWrap.appendChild(button);
+    });
+
+    chatForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const value = chatInput.value.trim();
+      if (!value) return;
+      chatInput.value = "";
+      askDigitalMe(value);
+    });
+
+    document.getElementById("close-chat").addEventListener("click", () => {
+      chatShell.classList.add("is-collapsed");
+    });
+
+    document.getElementById("open-chat").addEventListener("click", () => {
+      chatShell.classList.remove("is-collapsed");
+      chatInput.focus();
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: .16, rootMargin: "0px 0px -40px 0px" });
+
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+
+    applyTheme(localStorage.getItem("resume_theme") || "dark");
+    applyProfile();
+    addMessage(profile.chat.intro);
+  </script>
+</body>
+</html>
