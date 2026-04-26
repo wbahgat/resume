@@ -1018,15 +1018,13 @@
       border-color: rgba(15,23,42,.1);
     }
 
-    body[data-theme="light"] .chat-form {
+    body[data-theme="light"] .quick-prompts-wrap {
       background: rgba(255,255,255,.56);
       border-top-color: rgba(15,23,42,.1);
     }
 
-    body[data-theme="light"] .chat-form input {
-      color: #0f172a;
-      background: rgba(255,255,255,.88);
-      border-color: rgba(15,23,42,.12);
+    body[data-theme="light"] .quick-prompts-label {
+      color: rgba(15,23,42,.58);
     }
 
     .chat-shell.is-collapsed .chat-panel {
@@ -1122,6 +1120,21 @@
       flex-wrap: wrap;
     }
 
+    .quick-prompts-wrap {
+      border-top: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.045);
+      padding-top: 10px;
+    }
+
+    .quick-prompts-label {
+      padding: 0 16px 10px;
+      color: rgba(248,250,252,.58);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
     .prompt {
       border: 1px solid rgba(255,255,255,.14);
       border-radius: 999px;
@@ -1131,37 +1144,6 @@
       cursor: pointer;
       font-size: .76rem;
       font-weight: 800;
-    }
-
-    .chat-form {
-      display: flex;
-      gap: 10px;
-      padding: 14px;
-      border-top: 1px solid rgba(255,255,255,.1);
-      background: rgba(255,255,255,.045);
-    }
-
-    .chat-form input {
-      min-width: 0;
-      flex: 1;
-      border: 1px solid rgba(255,255,255,.14);
-      border-radius: 999px;
-      padding: 12px 14px;
-      color: #fff;
-      background: rgba(255,255,255,.08);
-      outline: 0;
-    }
-
-    .chat-form input::placeholder { color: rgba(248,250,252,.42); }
-
-    .chat-form button {
-      border: 0;
-      border-radius: 999px;
-      padding: 0 16px;
-      color: #fff;
-      background: linear-gradient(135deg, var(--hot), var(--violet));
-      cursor: pointer;
-      font-weight: 900;
     }
 
     .chat-toggle {
@@ -1274,7 +1256,6 @@
           <h1>Reliable systems for <span class="serif">demanding domains.</span></h1>
           <p class="lead" data-profile="summary">Principal Software Engineer with 15+ years building scalable, high-performance server-side and systems software across telecom, aerospace, aviation surveillance, unmanned aerial vehicle systems, autonomous navigation, and satellite communications.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#digital-me">Ask Wael</a>
             <a class="btn" href="#projects">Explore Systems Work</a>
           </div>
           <div class="domain-strip" aria-label="Professional domains">
@@ -1451,18 +1432,6 @@
       </div>
     </section>
 
-    <section id="digital-me">
-      <div class="wrap">
-        <div class="section-head reveal">
-          <h2>Ask Wael's profile.</h2>
-          <p>Visitors can ask about satellite core networks, telecom, UAV/drone systems, autonomous navigation, C++ architecture, testing, and contact details without digging through a PDF.</p>
-        </div>
-        <article class="card reveal">
-          <h3>How it works</h3>
-          <p>The assistant is powered by Wael's resume data and prioritizes professional server-side experience first, while still answering about personal products like Yalabeena when asked.</p>
-        </article>
-      </div>
-    </section>
   </main>
 
   <footer>
@@ -1484,11 +1453,10 @@
         <button class="icon-btn" id="close-chat" type="button" aria-label="Minimize chat">-</button>
       </div>
       <div class="chat-log" id="chat-log" aria-live="polite"></div>
-      <div class="quick-prompts" id="quick-prompts"></div>
-      <form class="chat-form" id="chat-form">
-        <input id="chat-input" type="text" placeholder="Ask about skills, projects, experience..." autocomplete="off">
-        <button type="submit">Send</button>
-      </form>
+      <div class="quick-prompts-wrap">
+        <p class="quick-prompts-label">Select a topic</p>
+        <div class="quick-prompts" id="quick-prompts"></div>
+      </div>
     </div>
     <button class="chat-toggle" id="open-chat" type="button">Ask Wael</button>
   </aside>
@@ -1666,8 +1634,6 @@
     }
 
     const chatLog = document.getElementById("chat-log");
-    const chatForm = document.getElementById("chat-form");
-    const chatInput = document.getElementById("chat-input");
     const promptWrap = document.getElementById("quick-prompts");
     const chatShell = document.getElementById("chat-shell");
     const themeToggle = document.getElementById("theme-toggle");
@@ -1721,21 +1687,12 @@
       promptWrap.appendChild(button);
     });
 
-    chatForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const value = chatInput.value.trim();
-      if (!value) return;
-      chatInput.value = "";
-      askDigitalMe(value);
-    });
-
     document.getElementById("close-chat").addEventListener("click", () => {
       chatShell.classList.add("is-collapsed");
     });
 
     document.getElementById("open-chat").addEventListener("click", () => {
       chatShell.classList.remove("is-collapsed");
-      chatInput.focus();
     });
 
     const observer = new IntersectionObserver((entries) => {
