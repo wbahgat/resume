@@ -1287,10 +1287,18 @@
       pointer-events: all;
     }
 
-    .chat-shell.is-collapsed .chat-panel {
-      opacity: 0;
+    .chat-shell.is-collapsed {
+      width: max-content;
       pointer-events: none;
-      transform: translateY(20px) scale(.96);
+    }
+
+    .chat-shell.is-collapsed .chat-panel {
+      display: none;
+    }
+
+    .chat-shell.is-collapsed .chat-toggle {
+      position: static;
+      pointer-events: auto;
     }
 
     .chat-head {
@@ -1554,7 +1562,6 @@
         left: auto;
         right: 14px;
         bottom: 14px;
-        width: auto;
         max-height: none;
       }
       .chat-panel {
