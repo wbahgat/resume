@@ -6,6 +6,13 @@
   <title>Wael Bahgat — Principal Software Engineer</title>
   <meta name="description" content="Wael Bahgat's resume portfolio, featuring server-side C++ architecture, satellite communications, telecom systems, aviation surveillance, and autonomous systems.">
   <meta name="theme-color" content="#09090f">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wbahgat.github.io/resume/">
+  <meta property="og:title" content="Wael Bahgat — Principal Software Engineer">
+  <meta property="og:description" content="15+ years building mission-critical server-side systems across satellite communications, telecom, aviation surveillance, autonomous navigation, and UAV domains.">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Wael Bahgat — Principal Software Engineer">
+  <meta name="twitter:description" content="15+ years building mission-critical server-side systems across satellite communications, telecom, aviation surveillance, autonomous navigation, and UAV domains.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
@@ -1214,9 +1221,10 @@
 
     @media (max-width: 720px) {
       .wrap { width: min(100% - 28px, var(--max)); }
+      .nav { z-index: 40; }
       .nav-links { display: none; }
       .hero { padding-top: 54px; }
-      .hero-stats { grid-template-columns: 1fr; }
+      .hero-stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
       .portrait-card { min-height: 470px; }
       .systems-board { inset: 20px 14px 170px; border-radius: 20px; }
       .board-grid { grid-template-columns: 1fr; }
@@ -1226,11 +1234,72 @@
       .portrait-copy { left: 18px; right: 18px; bottom: 18px; }
       .expertise-grid { grid-template-columns: 1fr; }
       .timeline-item { grid-template-columns: 1fr; }
-      .chat-shell { right: 14px; bottom: 14px; width: calc(100vw - 28px); }
-      .chat-shell.is-collapsed { width: auto; }
-      .btn-download { display: none; }
+
+      /* ── Mobile chat: full-width bottom sheet ── */
+      .chat-shell {
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        max-height: calc(100svh - 78px);
+      }
+      .chat-shell.is-collapsed {
+        left: auto;
+        right: 14px;
+        bottom: 14px;
+        width: auto;
+        max-height: none;
+      }
+      .chat-panel {
+        display: flex;
+        flex-direction: column;
+        max-height: calc(100svh - 78px);
+        border-radius: 24px 24px 0 0;
+      }
+      /* drag-handle visual */
+      .chat-panel::before {
+        content: "";
+        display: block;
+        width: 40px;
+        height: 4px;
+        border-radius: 2px;
+        background: rgba(255,255,255,.22);
+        margin: 10px auto 0;
+        flex-shrink: 0;
+      }
+      body[data-theme="light"] .chat-panel::before {
+        background: rgba(15,23,42,.18);
+      }
+      .chat-log {
+        flex: 1;
+        min-height: 160px;
+        height: auto;
+        scrollbar-width: none;
+      }
+      .chat-log::-webkit-scrollbar { display: none; }
+      /* wider message bubbles on mobile */
+      .chat-log .msg { max-width: 94%; }
+      /* prompt grid: 2 columns, all options visible at a glance */
+      .quick-prompts-wrap { flex-shrink: 0; }
+      .quick-prompts {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        padding: 0 16px max(16px, env(safe-area-inset-bottom)) 16px;
+        flex-wrap: unset;
+      }
+      .prompt {
+        padding: 10px 12px;
+        font-size: 0.8rem;
+        white-space: normal;
+        text-align: center;
+        border-radius: 14px;
+      }
+      /* larger close touch target */
+      .icon-btn { width: 44px; height: 44px; }
+
+      .btn-download { padding: 8px 11px; font-size: 0.8rem; }
       .brand span[data-profile] { display: none; }
-      .chat-log { height: 310px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1333,8 +1402,8 @@
       <div class="nav-links">
         <a href="#story">Systems Profile</a>
         <a href="#experience">Experience</a>
-        <a href="#projects">Domains</a>
-        <a href="#digital-me">Ask Wael</a>
+        <a href="#projects">Projects</a>
+        <a href="#" onclick="openChat(); return false;">Ask Wael</a>
       </div>
       <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light mode">Light</button>
       <a class="btn btn-download" href="Wael_Bahgat_Resume.pdf" download="Wael_Bahgat_Resume.pdf" aria-label="Download resume PDF">Download CV</a>
@@ -1347,7 +1416,7 @@
       <div class="wrap hero-grid">
         <div class="hero-copy reveal">
           <span class="eyebrow">Mission-Critical Server-Side Engineering</span>
-          <h1>Reliable systems for <span class="serif">demanding domains.</span></h1>
+          <h1>I build reliable systems for <span class="serif">demanding domains.</span></h1>
           <p class="lead" data-profile="summary">Principal Software Engineer with 15+ years building scalable, high-performance server-side and systems software across telecom, aerospace, aviation surveillance, unmanned aerial vehicle systems, autonomous navigation, and satellite communications.</p>
           <div class="hero-actions">
             <a class="btn" href="#projects">Explore Systems Work</a>
@@ -1413,8 +1482,8 @@
     <section id="story">
       <div class="wrap">
         <div class="section-head reveal">
-          <h2>Reliable software for constrained domains.</h2>
-          <p>A senior engineering profile shaped by telecom, aerospace, aviation surveillance, autonomous navigation, UAV systems, and satellite communications.</p>
+          <h2>I build reliable software for constrained domains.</h2>
+          <p>My engineering background spans telecom, aerospace, aviation surveillance, autonomous navigation, UAV systems, and satellite communications.</p>
         </div>
         <div class="expertise-grid reveal" aria-label="Core engineering experience visuals">
           <article class="expertise-tile">
@@ -1484,12 +1553,12 @@
         </div>
         <div class="bento">
           <article class="card span-7 reveal">
-            <h3>Server-Side Professional Narrative</h3>
-            <p data-profile="narrative">Wael builds server-side and embedded-adjacent systems where reliability, performance, and maintainability matter. His professional work spans GSM/LTE satellite network components, aviation surveillance, unmanned aerial vehicle surveillance, autonomous surface vessel navigation, VOIP air traffic control communications, and high-volume telecom billing platforms for major carriers.</p>
+            <h3>What I Build</h3>
+            <p data-profile="narrative">I build server-side and embedded-adjacent systems where reliability, performance, and maintainability matter. My work spans GSM/LTE satellite and ground core network components, CI/CD release pipeline infrastructure, aviation surveillance, autonomous surface vessel navigation, VOIP air traffic control, and high-volume telecom billing platforms for major carriers.</p>
           </article>
           <article class="card span-5 reveal">
             <h3>Core Systems Skills</h3>
-            <p>The emphasis is server-side C++, reliability, architecture, testing, and domain-heavy engineering.</p>
+          <p>My emphasis is server-side C++, reliability, architecture, testing, and domain-heavy engineering.</p>
             <div class="skill-cloud" id="skill-cloud"></div>
           </article>
           <article class="card span-4 reveal">
@@ -1511,8 +1580,8 @@
     <section id="experience">
       <div class="wrap">
         <div class="section-head reveal">
-          <h2>Experience in demanding domains.</h2>
-          <p>From high-volume telecom billing to satellite core network systems, the thread is reliable architecture under demanding constraints.</p>
+          <h2>My experience across demanding domains.</h2>
+          <p>From high-volume telecom billing to satellite core networks, my constant is reliable architecture under demanding constraints.</p>
         </div>
         <div class="timeline reveal" id="timeline"></div>
       </div>
@@ -1521,8 +1590,8 @@
     <section id="projects">
       <div class="wrap">
         <div class="section-head reveal">
-          <h2>Server-side work under pressure.</h2>
-          <p>The main thread is professional backend and systems engineering: telecom, satellite core networks, aviation surveillance, unmanned aerial vehicle systems, autonomous navigation, and production-grade C++ architecture.</p>
+          <h2>My server-side work under pressure.</h2>
+          <p>My work spans telecom, satellite core networks, aviation surveillance, unmanned aerial vehicle systems, autonomous navigation, and production-grade C++ architecture.</p>
         </div>
         <h3 class="project-subhead reveal">Professional Systems</h3>
         <div class="project-grid reveal" id="project-grid"></div>
@@ -1567,25 +1636,25 @@
       initials: "WB",
       role: "Principal Software Engineer",
       email: "mailto:wael.bahgat@gmail.com",
-      summary: "Principal Software Engineer with 15+ years building scalable, high-performance server-side and systems software across telecom, aerospace, aviation surveillance, unmanned aerial vehicle systems, autonomous navigation, and satellite communications.",
+      summary: "I'm a Principal Software Engineer with 15+ years building scalable, high-performance server-side and systems software across telecom, aerospace, aviation surveillance, unmanned aerial vehicle systems, autonomous navigation, and satellite communications.",
       tagline: "C++ architecture, distributed backends, telecom platforms, autonomous systems, and satellite core networks.",
       years: "15+",
       projectsCount: "5",
       focus: "C++",
-      narrative: "Wael builds server-side and embedded-adjacent systems where reliability, performance, and maintainability matter. His professional work spans GSM/LTE satellite and ground core network components (HLR, MME, HSS, DRA, MSC), CI/CD release pipeline infrastructure, container lifecycle management for multi-architecture deployments, aviation surveillance, autonomous surface vessel navigation, VOIP air traffic control, and high-volume telecom billing platforms for major carriers.",
-      strengthOne: "Designing modular C++ frameworks with SOLID principles, plugin boundaries, runtime extensibility, multithreading, asynchronous processing, and clean separation of core services.",
-      strengthTwo: "Leading full lifecycle professional delivery across requirements, architecture, implementation, automated testing, deployment, sprint planning, production debugging, and client-critical support.",
-      strengthThree: "Solving hard reliability problems in telecom, aerospace, and autonomous systems: memory leaks, deadlocks, crashes, real-time data aggregation, database-backed workflows, and distributed deployments.",
-      skills: ["C++17", "C++", "Server-Side Architecture", "Object-Oriented Design", "SOLID Principles", "Design Patterns", "Plugin Architecture", "Qt", "Multithreading", "Thread Pools", "Asynchronous Processing", "REST APIs", "TCP Services", "Docker", "PostgreSQL", "MongoDB", "SQLite3", "Oracle", "SQL", "Java", "PL/SQL", "GTest", "GCov", "TDD", "Performance Profiling", "gdb", "mdb", "GitLab CI/CD", "Release Engineering", "aarch64 Cross-compilation", "systemd", "GSUP Protocol", "Telecom Systems", "GSM/LTE", "Satellite Communications", "Aviation Surveillance", "UAV / Drone Surveillance", "Autonomous Navigation", "VOIP Air Traffic Control", "Flutter", "Dart", "AWS ECS/Fargate", "Braintree"],
+      narrative: "I build server-side and embedded-adjacent systems where reliability, performance, and maintainability matter. My work spans GSM/LTE satellite and ground core network components, CI/CD release pipeline infrastructure, container lifecycle management for multi-architecture deployments, aviation surveillance, autonomous surface vessel navigation, VOIP air traffic control, and high-volume telecom billing platforms for major carriers.",
+      strengthOne: "I design modular C++ frameworks with SOLID principles, plugin boundaries, runtime extensibility, multithreading, asynchronous processing, and clean separation of core services.",
+      strengthTwo: "I lead full lifecycle delivery across requirements, architecture, implementation, automated testing, deployment, sprint planning, production debugging, and client-critical support.",
+      strengthThree: "I'm a strong fit for teams building telecom, aerospace, autonomous, or other reliability-sensitive systems that need senior server-side architecture and hands-on delivery.",
+      skills: ["C++17", "C++", "Server-Side Architecture", "Object-Oriented Design", "SOLID Principles", "Design Patterns", "Plugin Architecture", "Qt", "Multithreading", "Thread Pools", "Asynchronous Processing", "REST APIs", "TCP Services", "Docker", "PostgreSQL", "MongoDB", "SQLite3", "Oracle", "SQL", "Java", "PL/SQL", "GTest", "GCov", "TDD", "Performance Profiling", "gdb", "mdb", "GitLab CI/CD", "Release Engineering", "aarch64 Cross-compilation", "systemd", "Telecom Systems", "GSM/LTE", "Satellite Communications", "Aviation Surveillance", "UAV / Drone Surveillance", "Autonomous Navigation", "VOIP Air Traffic Control", "Flutter", "Dart", "AWS ECS/Fargate", "Braintree"],
       experience: [
         {
           date: "Dec 2023 - Present",
           title: "Principal Software Engineer, Lead Developer, Core Network Team — Lynk Global",
           bullets: [
-            "Architected dual-mode (satellite / ground) GSM/LTE core network in C++17: HLR, MME, HSS, DRA, MSC, and LynkDBGw — including GSUP protocol encoding/decoding",
-            "Built plugin-based runtime with hot-reload JSON configuration, MongoDB / PostgreSQL / SQLite3 backends, async thread-pool processing, and GTest/GCov coverage",
-            "Designed and owns a 4-mode GitLab CI/CD release pipeline: unit tests, two-phase Docker builds, RC creation with JSON manifest tracking, and final amd64/aarch64 multi-arch tagging",
-            "Owns container lifecycle infrastructure: multi-stage Dockerfiles, lynk-executor runtime manager (4 deployment modes), Docker registry management, and systemd production integration"
+            "Architected dual-mode (satellite / ground) GSM/LTE core network in C++17, covering standard core network elements across the control and user planes with full signaling protocol support",
+            "Built plugin-based runtime with dynamic configuration, MongoDB / PostgreSQL / SQLite3 backends, async thread-pool processing, and GTest/GCov coverage",
+            "Designed and owns a GitLab CI/CD release pipeline covering unit tests, two-phase Docker builds, release candidate creation with manifest tracking, and final amd64/aarch64 multi-arch tagging",
+            "Owns container lifecycle infrastructure: multi-stage Dockerfiles, a custom runtime manager supporting multiple deployment modes, Docker registry management, and systemd production integration"
           ]
         },
         {
@@ -1628,7 +1697,7 @@
         },
         {
           title: "CI/CD & Release Engineering Pipeline",
-          body: "4-mode GitLab CI/CD system built from scratch: nightly unit tests, two-phase Docker builds (build + runtime containers), RC creation with JSON release manifest tracking per component, and final multi-arch (amd64/aarch64) tagging. Includes email and Google Chat notifications, Docker registry lifecycle management, local execution support, and PostgreSQL/MongoDB integration test environments."
+          body: "GitLab CI/CD system built from scratch: nightly unit tests, two-phase Docker builds (build + runtime containers), release candidate creation with manifest tracking per component, and final multi-arch (amd64/aarch64) tagging. Includes email and Google Chat notifications, Docker registry lifecycle management, local execution support, and PostgreSQL/MongoDB integration test environments."
         }
       ],
       personalProjects: [
@@ -1642,14 +1711,15 @@
         }
       ],
       chat: {
-        intro: "Hi, I am Wael's resume assistant. Ask me about his server-side C++ architecture, satellite core network experience, telecom background, autonomous navigation work, UAV/drone surveillance projects, personal products, education, or contact details.",
-        experience: "Wael has 15+ years of professional engineering experience centered on server-side C++ and mission-critical systems. At Lynk Global he leads GSM/LTE satellite and ground core network development, owning the C++17 lynkframework (HLR, MME, HSS, DRA, MSC, LynkDBGw), the full 4-mode CI/CD release pipeline (GitLab, amd64/aarch64 multi-arch), and container lifecycle infrastructure (lynk-executor, Docker registry, systemd). Previously he built aviation surveillance systems and UAV/drone surveillance capabilities at L3Harris, led autonomous surface vessel navigation at Gibbs & Cox, and delivered telecom billing systems at Openet for Verizon, AT&T, Sprint, and other major carriers.",
-        skills: "Wael's core professional skills are C++17/C++, server-side architecture, object-oriented design, SOLID principles, design patterns, plugin architecture, Qt, multithreading, thread pools, async processing, REST/TCP services, Docker, PostgreSQL, MongoDB, Oracle, Java, PL/SQL, GTest, GCov, TDD, CI/CD, gdb/mdb debugging, performance profiling, telecom systems, GSM/LTE, satellite communications, aviation surveillance, UAV/drone surveillance, autonomous navigation, and VOIP air traffic control systems.",
-        projects: "Professional highlights at Lynk Global: dual-mode GSM/LTE core network (HLR, MME, HSS, DRA, MSC) in C++17, a 4-mode GitLab CI/CD release pipeline with amd64/aarch64 multi-arch Docker builds and JSON release manifests, and container lifecycle management with lynk-executor. At L3Harris: aviation surveillance and UAV/drone systems. At Gibbs & Cox: autonomous surface vessel navigation. At Openet: telecom billing platforms for Verizon, AT&T, Sprint. Yalabeena is Wael's personal full-stack product built with Flutter + C++17 Drogon.",
-        yalabeena: "Yalabeena, originally BMyGst, is Wael's personal project, not the main professional thread. It demonstrates full-stack product ownership: Flutter web/mobile UI, Provider/go_router app structure, C++17 Drogon REST backend, plugin-based route modules, PostgreSQL persistence, JWT/session management, host calendars, cart/checkout, credits, refunds, Braintree reconciliation, Google Calendar/email integrations, Dockerized development, and pytest E2E coverage. Link: https://www.yalabeena.com/",
-        strengths: "Wael is strongest where architecture, performance, and reliability intersect: modular server-side C++ systems, plugin-based design, multithreaded services, autonomous/aviation/telecom domains, production debugging, test strategy, and full lifecycle technical leadership.",
-        education: "Wael holds an M.S. in Electrical Engineering from NYU Tandon School of Engineering, GPA 3.87, and a B.S. in Computer Engineering from Ain Shams University in Cairo.",
-        contact: "You can reach Wael at wael.bahgat@gmail.com or call 571-501-8996. He is based in Bethesda, Maryland."
+        intro: "Hi, I'm Wael. Ask me about my C++ systems work, satellite core network experience, telecom background, autonomous navigation projects, UAV/drone systems, Yalabeena, education, or anything else on this page.",
+        experience: "I have 15+ years of engineering experience centered on server-side C++ and mission-critical systems. At Lynk Global I lead GSM/LTE satellite and ground core network development, owning C++17 core network components, a full CI/CD release pipeline (GitLab, amd64/aarch64 multi-arch), and container lifecycle infrastructure (Docker registry, systemd). Before that I built aviation surveillance systems and UAV/drone capabilities at L3Harris, led autonomous surface vessel navigation at Gibbs & Cox, and delivered telecom billing platforms at Openet for Verizon, AT&T, Sprint, and other major carriers.",
+        skills: "My core professional skills are C++17/C++, server-side architecture, object-oriented design, SOLID principles, design patterns, plugin architecture, Qt, multithreading, thread pools, async processing, REST/TCP services, Docker, PostgreSQL, MongoDB, Oracle, Java, PL/SQL, GTest, GCov, TDD, CI/CD, gdb/mdb debugging, performance profiling, telecom systems, GSM/LTE, satellite communications, aviation surveillance, UAV/drone surveillance, autonomous navigation, and VOIP air traffic control.",
+        projects: "My main professional work spans dual-mode GSM/LTE core network components in C++17 at Lynk Global; aviation surveillance and UAV/drone systems at L3Harris; autonomous surface vessel navigation at Gibbs & Cox; and high-volume telecom billing at Openet for Verizon, AT&T, and Sprint. On the personal side I built Yalabeena — a full-stack booking platform with Flutter, C++17 Drogon, and PostgreSQL.",
+        satellite: "At Lynk Global I architect and lead the satellite and ground GSM/LTE core network in C++17. The system covers multiple core network elements with plugin-based design, runtime-swappable database backends (MongoDB, PostgreSQL, SQLite3), async thread-pool processing, and full GTest/GCov coverage. I also own the complete CI/CD release pipeline and container lifecycle infrastructure supporting multi-arch (amd64/aarch64) satellite deployments.",
+        yalabeena: "Yalabeena, originally BMyGst, is my personal project — not the main professional thread. It demonstrates full-stack product ownership: Flutter web/mobile UI, Provider/go_router app structure, C++17 Drogon REST backend, plugin-based route modules, PostgreSQL persistence, JWT/session management, host calendars, cart/checkout, credits, refunds, Braintree reconciliation, Google Calendar/email integrations, Dockerized development, and pytest E2E coverage. You can try it at https://www.yalabeena.com/",
+        strengths: "I'm strongest where architecture, performance, and reliability intersect: modular server-side C++ systems, plugin-based design, multithreaded services, autonomous/aviation/telecom domains, production debugging, test strategy, and full lifecycle technical leadership.",
+        education: "I hold an M.S. in Electrical Engineering from NYU Tandon School of Engineering (GPA 3.87) and a B.S. in Computer Engineering from Ain Shams University in Cairo.",
+        contact: "You can reach me at wael.bahgat@gmail.com or call 571-501-8996. I'm based in Bethesda, Maryland."
       }
     };
 
@@ -1773,17 +1843,17 @@
 
     function answerFor(question) {
       const q = question.toLowerCase();
-      if (q.includes("pipeline") || q.includes("cicd") || q.includes("ci/cd") || q.includes("release") || q.includes("container") || q.includes("docker") || q.includes("executor")) return "Wael owns the complete release engineering stack at Lynk: a 4-mode GitLab CI/CD pipeline (unit tests, two-phase Docker builds, RC creation with JSON manifest tracking, and final multi-arch tagging for amd64/aarch64). He also built lynk-executor — the runtime container manager supporting 4 deployment modes — plus Docker registry management and systemd production integration.";
+      if (q.includes("pipeline") || q.includes("cicd") || q.includes("ci/cd") || q.includes("release") || q.includes("container") || q.includes("docker") || q.includes("executor")) return "I own the complete release engineering stack at Lynk: a GitLab CI/CD pipeline covering unit tests, two-phase Docker builds, release candidate creation with manifest tracking, and final multi-arch tagging for amd64/aarch64. I also built a custom runtime container manager supporting multiple deployment modes, plus Docker registry management and systemd production integration.";
+      if (q.includes("uav") || q.includes("drone") || q.includes("unmanned") || q.includes("autonomous") || q.includes("navigation") || q.includes("automation")) return "I led and built autonomous and unmanned systems work at two companies: autonomous surface vessel navigation at Gibbs & Cox using a modular Qt/C++ framework, Composite-pattern device modeling, hardware abstraction, and runtime extensibility; and UAV/drone surveillance with real-time radar/ADS-B aggregation at L3Harris using C++/Qt and reusable tested libraries.";
+      if (q.includes("satellite") || q.includes("gsm") || q.includes("lte") || q.includes("network")) return profile.chat.satellite;
       if (q.includes("experience") || q.includes("work") || q.includes("role")) return profile.chat.experience;
       if (q.includes("skill") || q.includes("stack") || q.includes("tool")) return profile.chat.skills;
       if (q.includes("yalabeena") || q.includes("waseala") || q.includes("booking") || q.includes("calendar") || q.includes("credit") || q.includes("braintree") || q.includes("flutter") || q.includes("link")) return profile.chat.yalabeena;
-      if (q.includes("uav") || q.includes("drone") || q.includes("unmanned") || q.includes("autonomous") || q.includes("navigation") || q.includes("automation")) return "Wael led and built professional autonomous and unmanned systems work: autonomous surface vessel navigation at Gibbs & Cox using a modular Qt/C++ framework, Composite-pattern device modeling, hardware abstraction, and runtime extensibility; plus UAV/drone surveillance and real-time radar/ADS-B aggregation at L3Harris using C++/Qt and reusable tested libraries.";
-      if (q.includes("project") || q.includes("achievement") || q.includes("built")) return profile.chat.projects;
-      if (q.includes("satellite") || q.includes("gsm") || q.includes("lte") || q.includes("network")) return profile.chat.projects;
+      if (q.includes("project") || q.includes("achievement") || q.includes("built") || q.includes("highlight")) return profile.chat.projects;
       if (q.includes("education") || q.includes("degree") || q.includes("school") || q.includes("university")) return profile.chat.education;
       if (q.includes("strength") || q.includes("why") || q.includes("fit")) return profile.chat.strengths;
       if (q.includes("contact") || q.includes("email") || q.includes("hire") || q.includes("reach")) return profile.chat.contact;
-      return "Great question. I can answer best about experience, skills, projects, strengths, and contact details. Once the resume content is added, my answers become specific to the candidate.";
+      return "I can best answer questions about my experience, skills, projects, satellite work, CI/CD pipeline, Yalabeena, strengths, education, and contact details — pick a topic above or ask anything.";
     }
 
     function askDigitalMe(question) {
@@ -1801,6 +1871,7 @@
     });
 
     const chatBackdrop = document.getElementById("chat-backdrop");
+    let introShown = false;
 
     function openChat() {
       chatShell.classList.remove("is-collapsed");
