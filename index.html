@@ -102,6 +102,26 @@
 
     .wrap { width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
 
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      z-index: 60;
+      background: transparent;
+      pointer-events: none;
+    }
+
+    .scroll-progress span {
+      display: block;
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--cyan), var(--violet), var(--green));
+      box-shadow: 0 0 18px rgba(34,211,238,.52);
+      transition: width .12s linear;
+    }
+
     .noise {
       position: fixed;
       inset: 0;
@@ -215,9 +235,36 @@
       font-weight: 700;
     }
 
-    .nav-links a:hover { color: #fff; }
+    .nav-links a {
+      position: relative;
+      transition: color .2s var(--ease);
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -10px;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--cyan), var(--green));
+      opacity: 0;
+      transform: scaleX(.4);
+      transition: opacity .22s var(--ease), transform .22s var(--ease);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.is-active { color: #fff; }
+
+    .nav-links a.is-active::after {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+
     body[data-theme="light"] .nav-links { color: rgba(15,23,42,.66); }
-    body[data-theme="light"] .nav-links a:hover { color: #0f172a; }
+    body[data-theme="light"] .nav-links a:hover,
+    body[data-theme="light"] .nav-links a.is-active { color: #0f172a; }
 
     .btn {
       display: inline-flex;
@@ -244,6 +291,10 @@
       border: 0;
       background: linear-gradient(135deg, #0891b2, var(--violet) 52%, var(--green));
       box-shadow: 0 18px 48px rgba(34,211,238,.22);
+    }
+
+    .btn-download {
+      box-shadow: 0 18px 48px rgba(34,211,238,.32);
     }
 
     .theme-toggle {
@@ -437,6 +488,65 @@
       font-weight: 700;
     }
 
+    .impact-strip {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .impact-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(125,211,252,.18);
+      border-radius: 20px;
+      padding: 14px;
+      background:
+        radial-gradient(circle at 14% 0, rgba(34,211,238,.16), transparent 40%),
+        rgba(255,255,255,.055);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+    }
+
+    .impact-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,.12), transparent);
+      transform: translateX(-120%);
+      animation: sheen 8s var(--ease) infinite;
+      pointer-events: none;
+    }
+
+    .impact-card span {
+      display: block;
+      color: var(--cyan);
+      font-size: .68rem;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .impact-card strong {
+      display: block;
+      margin-top: 6px;
+      font-size: .95rem;
+      line-height: 1.25;
+      letter-spacing: -.03em;
+    }
+
+    body[data-theme="light"] .impact-card {
+      background:
+        radial-gradient(circle at 14% 0, rgba(14,165,233,.13), transparent 40%),
+        rgba(255,255,255,.82);
+      border-color: rgba(14,165,233,.18);
+      box-shadow: 0 14px 34px rgba(15,23,42,.08);
+    }
+
+    @keyframes sheen {
+      0%, 36% { transform: translateX(-120%); }
+      54%, 100% { transform: translateX(120%); }
+    }
+
     .portrait-card {
       position: relative;
       min-height: 620px;
@@ -599,6 +709,55 @@
       align-content: center;
     }
 
+    .signal-flow {
+      position: absolute;
+      inset: 84px 24px 74px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .signal-flow span {
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(103,232,249,.82), transparent);
+      box-shadow: 0 0 12px rgba(103,232,249,.5);
+      opacity: .62;
+      transform-origin: center;
+      animation: signalPulse 4.6s var(--ease) infinite;
+    }
+
+    .signal-flow span:nth-child(1) { top: 18%; transform: rotate(13deg); }
+    .signal-flow span:nth-child(2) { top: 50%; transform: rotate(-10deg); animation-delay: -1.4s; }
+    .signal-flow span:nth-child(3) { top: 77%; transform: rotate(8deg); animation-delay: -2.7s; }
+
+    .signal-flow span::after {
+      content: "";
+      position: absolute;
+      top: -3px;
+      left: 0;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #e0f2fe;
+      box-shadow: 0 0 18px rgba(103,232,249,.9);
+      animation: signalNode 4.6s linear infinite;
+    }
+
+    .signal-flow span:nth-child(2)::after { animation-delay: -1.4s; }
+    .signal-flow span:nth-child(3)::after { animation-delay: -2.7s; }
+
+    @keyframes signalPulse {
+      0%, 100% { opacity: .22; }
+      44%, 62% { opacity: .74; }
+    }
+
+    @keyframes signalNode {
+      from { left: 0; }
+      to { left: calc(100% - 7px); }
+    }
+
     .domain-chip {
       border: 1px solid rgba(255,255,255,.2);
       border-radius: 12px;
@@ -734,6 +893,17 @@
     section {
       padding: 74px 0;
       position: relative;
+    }
+
+    section:not(.hero)::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: min(520px, 72vw);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(125,211,252,.36), transparent);
+      transform: translateX(-50%);
     }
 
     .section-head {
@@ -882,6 +1052,31 @@
       margin-top: 18px;
     }
 
+    .skill-groups {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .skill-group {
+      position: relative;
+    }
+
+    .skill-group h4 {
+      margin-bottom: 8px;
+      color: rgba(248,250,252,.9);
+      font-size: .78rem;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    body[data-theme="light"] .skill-group h4 { color: #0f172a; }
+
+    .skill-group .skill-cloud {
+      margin-top: 0;
+    }
+
     .chip {
       border: 1px solid rgba(255,255,255,.16);
       border-radius: 999px;
@@ -894,6 +1089,7 @@
 
     body[data-theme="light"] .chip,
     body[data-theme="light"] .project-link,
+    body[data-theme="light"] .project-tag,
     body[data-theme="light"] .prompt {
       color: #0f172a;
       background: rgba(255,255,255,.8);
@@ -913,6 +1109,13 @@
       border-radius: 20px;
       padding: 18px;
       background: rgba(255,255,255,.055);
+      transition: transform .24s var(--ease), border-color .24s var(--ease), box-shadow .24s var(--ease);
+    }
+
+    .timeline-item:hover {
+      transform: translateY(-3px);
+      border-color: rgba(125,211,252,.34);
+      box-shadow: 0 18px 44px rgba(2,6,23,.24), inset 0 1px 0 rgba(255,255,255,.08);
     }
 
     .timeline-date {
@@ -945,6 +1148,13 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      transition: transform .24s var(--ease), border-color .24s var(--ease), box-shadow .24s var(--ease);
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(125,211,252,.34);
+      box-shadow: 0 22px 58px rgba(2,6,23,.26);
     }
 
     .project-card .number {
@@ -960,6 +1170,25 @@
       flex-wrap: wrap;
       gap: 8px;
       margin-top: 16px;
+    }
+
+    .project-tags {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 14px;
+    }
+
+    .project-tag {
+      border: 1px solid rgba(125,211,252,.16);
+      border-radius: 999px;
+      padding: 6px 9px;
+      background: rgba(8,47,73,.28);
+      color: rgba(224,242,254,.88);
+      font-size: .7rem;
+      font-weight: 900;
+      letter-spacing: .04em;
     }
 
     .project-link {
@@ -1189,6 +1418,58 @@
       transform: translateY(10px);
     }
 
+    .mobile-action-bar {
+      display: none;
+      position: fixed;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      z-index: 28;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      padding: 10px;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 22px;
+      background: rgba(9,9,15,.78);
+      backdrop-filter: blur(22px);
+      box-shadow: 0 20px 54px rgba(0,0,0,.34);
+    }
+
+    .mobile-action-bar a {
+      display: grid;
+      place-items: center;
+      min-height: 42px;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 16px;
+      color: rgba(248,250,252,.9);
+      background: rgba(255,255,255,.075);
+      font-size: .78rem;
+      font-weight: 900;
+    }
+
+    .mobile-action-bar a:first-child {
+      color: #fff;
+      border: 0;
+      background: linear-gradient(135deg, #0891b2, var(--violet) 52%, var(--green));
+    }
+
+    body[data-theme="light"] .mobile-action-bar {
+      background: rgba(248,250,252,.88);
+      border-color: rgba(15,23,42,.12);
+      box-shadow: 0 20px 54px rgba(15,23,42,.16);
+    }
+
+    body[data-theme="light"] .mobile-action-bar a {
+      color: #0f172a;
+      background: rgba(255,255,255,.82);
+      border-color: rgba(15,23,42,.1);
+    }
+
+    body[data-theme="light"] .mobile-action-bar a:first-child {
+      color: #fff;
+      background: linear-gradient(135deg, #0284c7, #2563eb 56%, #059669);
+    }
+
     .reveal {
       opacity: 0;
       transform: translateY(24px);
@@ -1212,6 +1493,7 @@
       .systems-board { inset: 32px 22px 178px; }
       .domain-chip { font-size: .61rem; padding: 8px; }
       .board-grid { gap: 8px; }
+      .impact-strip { grid-template-columns: 1fr; }
       .section-head { display: block; }
       .section-head p { margin-top: 12px; }
       .expertise-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1300,6 +1582,9 @@
 
       .btn-download { padding: 8px 11px; font-size: 0.8rem; }
       .brand span[data-profile] { display: none; }
+      .mobile-action-bar { display: grid; }
+      footer { padding-bottom: 104px; }
+      .chat-shell.is-collapsed { bottom: 86px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1345,7 +1630,7 @@
     .project-card:nth-child(5) { background: linear-gradient(145deg, rgba(56,189,248,.16), rgba(255,255,255,.055)); }
 
     @media print {
-      .noise, .orb, .chat-shell, .nav, .hero-actions,
+      .noise, .orb, .chat-shell, .nav, .hero-actions, .scroll-progress, .mobile-action-bar,
       body::before, body::after { display: none !important; }
       body {
         background: #fff !important;
@@ -1366,7 +1651,7 @@
       .card p, .card li, .timeline-bullets,
       .timeline-bullets li, .stat-card span { color: #333 !important; }
       .expertise-grid { grid-template-columns: repeat(3, 1fr); }
-      .span-7, .span-5, .span-4 { grid-column: span 12; }
+      .span-7, .span-5, .span-4, .span-6 { grid-column: span 12; }
       .project-grid { grid-template-columns: repeat(2, 1fr); }
       h1 .serif {
         color: #000 !important;
@@ -1388,6 +1673,7 @@
   </style>
 </head>
 <body>
+  <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
   <div class="noise" aria-hidden="true"></div>
   <div class="orb one" aria-hidden="true"></div>
   <div class="orb two" aria-hidden="true"></div>
@@ -1401,13 +1687,14 @@
       </a>
       <div class="nav-links">
         <a href="#story">Systems Profile</a>
+        <a href="#education">Education</a>
         <a href="#experience">Experience</a>
         <a href="#projects">Projects</a>
         <a href="#" onclick="openChat(); return false;">Ask Wael</a>
       </div>
       <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light mode">Light</button>
-      <a class="btn btn-download" href="Wael_Bahgat_Resume.pdf" download="Wael_Bahgat_Resume.pdf" aria-label="Download resume PDF">Download CV</a>
-      <a class="btn btn-primary" href="mailto:hello@example.com" data-profile-href="email">Contact</a>
+      <a class="btn btn-primary btn-download" href="Wael_Bahgat_Resume.pdf" download="Wael_Bahgat_Resume.pdf" aria-label="Download resume PDF">Download CV</a>
+      <a class="btn" href="mailto:wael.bahgat@gmail.com" data-profile-href="email">Contact</a>
     </div>
   </nav>
 
@@ -1422,7 +1709,7 @@
             <a class="btn" href="#projects">Explore Systems Work</a>
           </div>
           <p class="hero-contact">
-            <a href="mailto:wael.bahgat@gmail.com">wael.bahgat@gmail.com</a> &nbsp;·&nbsp; Bethesda, MD
+            <a href="mailto:wael.bahgat@gmail.com">wael.bahgat@gmail.com</a> &nbsp;·&nbsp; Bethesda, MD &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/wael-bahgat-5667662/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           </p>
           <div class="domain-strip" aria-label="Professional domains">
             <span class="domain-pill">Satellite GSM/LTE</span>
@@ -1430,12 +1717,12 @@
             <span class="domain-pill">Aviation Surveillance</span>
             <span class="domain-pill">UAV / Drone Systems</span>
             <span class="domain-pill">Autonomous Navigation</span>
-            <span class="domain-pill">CI/CD Pipeline</span>
+            <span class="domain-pill">CI/CD Pipelines</span>
             <span class="domain-pill">Container Orchestration</span>
           </div>
           <div class="hero-stats" aria-label="Career highlights">
             <div class="stat-card">
-              <strong data-profile="years">10+</strong>
+              <strong data-profile="years">15+</strong>
               <span>Years in critical systems</span>
             </div>
             <div class="stat-card">
@@ -1447,6 +1734,20 @@
               <span>Core discipline</span>
             </div>
           </div>
+          <div class="impact-strip reveal" aria-label="Selected impact areas">
+            <div class="impact-card">
+              <span>Satellite</span>
+              <strong>Core network architecture for GSM/LTE systems</strong>
+            </div>
+            <div class="impact-card">
+              <span>Release</span>
+              <strong>CI/CD, Docker, multi-arch delivery, and runtime ops</strong>
+            </div>
+            <div class="impact-card">
+              <span>Autonomy</span>
+              <strong>Navigation, UAV surveillance, and aviation platforms</strong>
+            </div>
+          </div>
         </div>
 
         <aside class="portrait-card reveal" aria-label="Systems engineering diagram">
@@ -1454,6 +1755,11 @@
             <div class="board-head">
               <div class="board-title">Systems Architecture</div>
               <div class="board-pill">Live Profile</div>
+            </div>
+            <div class="signal-flow" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
             </div>
             <div class="board-grid">
               <div class="domain-chip one">OOD Design</div>
@@ -1483,7 +1789,7 @@
       <div class="wrap">
         <div class="section-head reveal">
           <h2>I build reliable software for constrained domains.</h2>
-          <p>My engineering background spans telecom, aerospace, aviation surveillance, autonomous navigation, UAV systems, and satellite communications.</p>
+          <p>My engineering background combines low-level systems design, distributed service architecture, and delivery in reliability-sensitive environments.</p>
         </div>
         <div class="expertise-grid reveal" aria-label="Core engineering experience visuals">
           <article class="expertise-tile">
@@ -1497,7 +1803,7 @@
               </svg>
             </div>
             <h3>Telecom Core Systems</h3>
-            <p>GSM/LTE, carrier billing, VOIP air traffic control, and high-volume production platforms.</p>
+            <p>GSM/LTE, carrier billing, VoIP air traffic control, and high-volume production platforms.</p>
           </article>
           <article class="expertise-tile">
             <div class="expertise-icon" aria-hidden="true">
@@ -1554,12 +1860,12 @@
         <div class="bento">
           <article class="card span-7 reveal">
             <h3>What I Build</h3>
-            <p data-profile="narrative">I build server-side and embedded-adjacent systems where reliability, performance, and maintainability matter. My work spans GSM/LTE satellite and ground core network components, CI/CD release pipeline infrastructure, aviation surveillance, autonomous surface vessel navigation, VOIP air traffic control, and high-volume telecom billing platforms for major carriers.</p>
+            <p data-profile="narrative">I build server-side and embedded-adjacent systems where reliability, performance, and maintainability matter. My work spans GSM/LTE satellite and ground core network components, CI/CD release pipeline infrastructure, aviation surveillance, autonomous surface vessel navigation, VoIP air traffic control, and high-volume telecom billing platforms for major carriers.</p>
           </article>
           <article class="card span-5 reveal">
             <h3>Core Systems Skills</h3>
-          <p>My emphasis is server-side C++, reliability, architecture, testing, and domain-heavy engineering.</p>
-            <div class="skill-cloud" id="skill-cloud"></div>
+            <p>My emphasis is server-side C++, reliability, architecture, testing, and domain-heavy engineering.</p>
+            <div class="skill-groups" id="skill-groups"></div>
           </article>
           <article class="card span-4 reveal">
             <h3>Architecture Strength</h3>
@@ -1572,6 +1878,25 @@
           <article class="card span-4 reveal">
             <h3>Best Fit</h3>
             <p data-profile="strengthThree">Teams building telecom, aerospace, autonomous, or other reliability-sensitive systems that need senior server-side architecture and hands-on delivery.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="education">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2>Education that supports systems work.</h2>
+          <p>Formal engineering training in electrical and computer engineering, paired with long-running production experience in C++ and distributed systems.</p>
+        </div>
+        <div class="bento reveal">
+          <article class="card span-6">
+            <h3>M.S. Electrical Engineering</h3>
+            <p>NYU Tandon School of Engineering · GPA 3.87</p>
+          </article>
+          <article class="card span-6">
+            <h3>B.S. Computer Engineering</h3>
+            <p>Ain Shams University · Cairo, Egypt</p>
           </article>
         </div>
       </div>
@@ -1591,7 +1916,7 @@
       <div class="wrap">
         <div class="section-head reveal">
           <h2>My server-side work under pressure.</h2>
-          <p>My work spans telecom, satellite core networks, aviation surveillance, unmanned aerial vehicle systems, autonomous navigation, and production-grade C++ architecture.</p>
+          <p>Selected professional and personal systems work across reliability-sensitive domains and production-grade C++ architecture.</p>
         </div>
         <h3 class="project-subhead reveal">Professional Systems</h3>
         <div class="project-grid reveal" id="project-grid"></div>
@@ -1613,7 +1938,7 @@
     <div class="chat-panel">
       <div class="chat-head">
         <div class="chat-person">
-          <div class="chat-avatar" data-profile="initials">YN</div>
+          <div class="chat-avatar" data-profile="initials">WB</div>
           <div>
             <strong>Ask Wael</strong>
             <span>Resume assistant</span>
@@ -1630,6 +1955,12 @@
     <button class="chat-toggle" id="open-chat" type="button">Ask Wael</button>
   </aside>
 
+  <div class="mobile-action-bar" aria-label="Quick resume actions">
+    <a href="Wael_Bahgat_Resume.pdf" download="Wael_Bahgat_Resume.pdf">CV</a>
+    <a href="mailto:wael.bahgat@gmail.com">Email</a>
+    <a href="https://www.linkedin.com/in/wael-bahgat-5667662/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+  </div>
+
   <script>
     const profile = {
       name: "Wael Bahgat",
@@ -1641,11 +1972,32 @@
       years: "15+",
       projectsCount: "5",
       focus: "C++",
-      narrative: "I build server-side and embedded-adjacent systems where reliability, performance, and maintainability matter. My work spans GSM/LTE satellite and ground core network components, CI/CD release pipeline infrastructure, container lifecycle management for multi-architecture deployments, aviation surveillance, autonomous surface vessel navigation, VOIP air traffic control, and high-volume telecom billing platforms for major carriers.",
+      narrative: "I build server-side and embedded-adjacent systems where reliability, performance, and maintainability matter. My work spans GSM/LTE satellite and ground core network components, CI/CD release pipeline infrastructure, container lifecycle management for multi-architecture deployments, aviation surveillance, autonomous surface vessel navigation, VoIP air traffic control, and high-volume telecom billing platforms for major carriers.",
       strengthOne: "I design modular C++ frameworks with SOLID principles, plugin boundaries, runtime extensibility, multithreading, asynchronous processing, and clean separation of core services.",
       strengthTwo: "I lead full lifecycle delivery across requirements, architecture, implementation, automated testing, deployment, sprint planning, production debugging, and client-critical support.",
       strengthThree: "I'm a strong fit for teams building telecom, aerospace, autonomous, or other reliability-sensitive systems that need senior server-side architecture and hands-on delivery.",
-      skills: ["C++17", "C++", "Server-Side Architecture", "Object-Oriented Design", "SOLID Principles", "Design Patterns", "Plugin Architecture", "Qt", "Multithreading", "Thread Pools", "Asynchronous Processing", "REST APIs", "TCP Services", "Docker", "PostgreSQL", "MongoDB", "SQLite3", "Oracle", "SQL", "Java", "PL/SQL", "GTest", "GCov", "TDD", "Performance Profiling", "gdb", "mdb", "GitLab CI/CD", "Release Engineering", "aarch64 Cross-compilation", "systemd", "Telecom Systems", "GSM/LTE", "Satellite Communications", "Aviation Surveillance", "UAV / Drone Surveillance", "Autonomous Navigation", "VOIP Air Traffic Control", "Flutter", "Dart", "AWS ECS/Fargate", "Braintree"],
+      skillGroups: [
+        {
+          label: "Languages & Frameworks",
+          skills: ["C++17", "C++", "Qt", "Java", "PL/SQL", "Flutter", "Dart"]
+        },
+        {
+          label: "Architecture",
+          skills: ["Server-Side Architecture", "Object-Oriented Design", "SOLID Principles", "Design Patterns", "Plugin Architecture", "Multithreading", "Thread Pools", "Asynchronous Processing", "REST APIs", "TCP Services"]
+        },
+        {
+          label: "Databases",
+          skills: ["PostgreSQL", "MongoDB", "SQLite3", "Oracle", "SQL"]
+        },
+        {
+          label: "DevOps & Testing",
+          skills: ["Docker", "GitLab CI/CD", "Release Engineering", "aarch64 cross-compilation", "systemd", "GTest", "GCov", "TDD", "Performance Profiling", "gdb", "mdb"]
+        },
+        {
+          label: "Domains",
+          skills: ["Telecom Systems", "GSM/LTE", "Satellite Communications", "Aviation Surveillance", "UAV / Drone Surveillance", "Autonomous Navigation", "VoIP Air Traffic Control", "AWS ECS/Fargate", "Braintree"]
+        }
+      ],
       experience: [
         {
           date: "Dec 2023 - Present",
@@ -1670,7 +2022,7 @@
         {
           date: "May 2016 - Jul 2020",
           title: "Senior Software Specialist — L3Harris",
-          body: "Aggregated radar and ADS-B data in real time across multiple sites, built unmanned aerial vehicle/drone surveillance capabilities in C++/Qt, worked on VOIP air traffic control communications, and developed reusable C++ libraries with GTest coverage."
+          body: "Aggregated radar and ADS-B data in real time across multiple sites, built unmanned aerial vehicle/drone surveillance capabilities in C++/Qt, worked on VoIP air traffic control communications, and developed reusable C++ libraries with GTest coverage."
         },
         {
           date: "Jan 2005 - Apr 2016",
@@ -1681,29 +2033,35 @@
       projects: [
         {
           title: "Satellite Core Network Framework",
-          body: "Modular C++ GSM/LTE architecture with plugin-based network modules, Dockerized multi-stage satellite deployments, centralized Postgres, async processing, thread pools, MongoDB session persistence, GTest, and GCov."
+          body: "Modular C++ GSM/LTE architecture with plugin-based network modules, Dockerized multi-stage satellite deployments, centralized Postgres, async processing, thread pools, MongoDB session persistence, GTest, and GCov.",
+          tags: ["C++17", "GSM/LTE", "Docker", "GTest"]
         },
         {
           title: "Aviation and UAV Surveillance Systems",
-          body: "Server-side and C++/Qt components for aviation surveillance, real-time radar and ADS-B aggregation, unmanned aerial vehicle/drone surveillance workflows, VOIP air traffic control communications, reusable libraries, GTest coverage, and performance validation."
+          body: "Server-side and C++/Qt components for aviation surveillance, real-time radar and ADS-B aggregation, unmanned aerial vehicle/drone surveillance workflows, VoIP air traffic control communications, reusable libraries, GTest coverage, and performance validation.",
+          tags: ["C++", "Qt", "ADS-B", "VoIP"]
         },
         {
           title: "Autonomous Navigation Platform",
-          body: "Modular Qt/C++ framework for autonomous surface vessel navigation with hierarchical onboard device modeling, Composite pattern architecture, hardware abstraction, runtime extensibility, requirements ownership, implementation, testing, and deployment leadership."
+          body: "Modular Qt/C++ framework for autonomous surface vessel navigation with hierarchical onboard device modeling, Composite pattern architecture, hardware abstraction, runtime extensibility, requirements ownership, implementation, testing, and deployment leadership.",
+          tags: ["Qt/C++", "Composite", "Hardware Abstraction"]
         },
         {
           title: "Telecom Billing and Production Engineering",
-          body: "High-volume telecom billing platforms and production support for major carriers including Verizon, AT&T, and Sprint. Delivered C++/Java hotfixes, PL/SQL/Oracle solutions, architecture documents, performance specs, and deep debugging of leaks, deadlocks, and crashes with gdb and mdb."
+          body: "High-volume telecom billing platforms and production support for major carriers including Verizon, AT&T, and Sprint. Delivered C++/Java hotfixes, PL/SQL/Oracle solutions, architecture documents, performance specs, and deep debugging of leaks, deadlocks, and crashes with gdb and mdb.",
+          tags: ["C++", "Java", "Oracle", "gdb/mdb"]
         },
         {
           title: "CI/CD & Release Engineering Pipeline",
-          body: "GitLab CI/CD system built from scratch: nightly unit tests, two-phase Docker builds (build + runtime containers), release candidate creation with manifest tracking per component, and final multi-arch (amd64/aarch64) tagging. Includes email and Google Chat notifications, Docker registry lifecycle management, local execution support, and PostgreSQL/MongoDB integration test environments."
+          body: "GitLab CI/CD system built from scratch: nightly unit tests, two-phase Docker builds (build + runtime containers), release candidate creation with manifest tracking per component, and final multi-arch (amd64/aarch64) tagging. Includes email and Google Chat notifications, Docker registry lifecycle management, local execution support, and PostgreSQL/MongoDB integration test environments.",
+          tags: ["GitLab CI/CD", "Docker", "amd64/aarch64", "Release Ops"]
         }
       ],
       personalProjects: [
         {
           title: "Yalabeena / BMyGst Booking Platform",
-          body: "Personal full-stack session booking product, originally developed as BMyGst and now presented as Yalabeena. Built with Flutter web/mobile frontend, C++17 Drogon REST backend, plugin-based service modules, PostgreSQL, JWT sessions, host calendars, cart/checkout, credit ledger, refunds, Braintree reconciliation, Google Calendar/email integrations, admin tools, Dockerized environments, and pytest E2E coverage.",
+          body: "Personal full-stack session booking product, originally developed as BMyGst and now presented as Yalabeena. Demonstrates end-to-end product ownership across Flutter web/mobile frontend, C++17 Drogon REST backend, plugin-based service modules, PostgreSQL, JWT sessions, host calendars, cart/checkout, credit ledger, refunds, Braintree reconciliation, Google Calendar/email integrations, admin tools, Dockerized environments, and pytest E2E coverage.",
+          tags: ["Flutter", "C++17", "Drogon", "PostgreSQL", "Braintree"],
           links: [
             { label: "www.yalabeena.com", url: "https://www.yalabeena.com/" },
             { label: "Open App", url: "https://www.yalabeena.com/app" }
@@ -1713,7 +2071,7 @@
       chat: {
         intro: "Hi, I'm Wael. Ask me about my C++ systems work, satellite core network experience, telecom background, autonomous navigation projects, UAV/drone systems, Yalabeena, education, or anything else on this page.",
         experience: "I have 15+ years of engineering experience centered on server-side C++ and mission-critical systems. At Lynk Global I lead GSM/LTE satellite and ground core network development, owning C++17 core network components, a full CI/CD release pipeline (GitLab, amd64/aarch64 multi-arch), and container lifecycle infrastructure (Docker registry, systemd). Before that I built aviation surveillance systems and UAV/drone capabilities at L3Harris, led autonomous surface vessel navigation at Gibbs & Cox, and delivered telecom billing platforms at Openet for Verizon, AT&T, Sprint, and other major carriers.",
-        skills: "My core professional skills are C++17/C++, server-side architecture, object-oriented design, SOLID principles, design patterns, plugin architecture, Qt, multithreading, thread pools, async processing, REST/TCP services, Docker, PostgreSQL, MongoDB, Oracle, Java, PL/SQL, GTest, GCov, TDD, CI/CD, gdb/mdb debugging, performance profiling, telecom systems, GSM/LTE, satellite communications, aviation surveillance, UAV/drone surveillance, autonomous navigation, and VOIP air traffic control.",
+        skills: "My core professional skills are C++17/C++, server-side architecture, object-oriented design, SOLID principles, design patterns, plugin architecture, Qt, multithreading, thread pools, async processing, REST/TCP services, Docker, PostgreSQL, MongoDB, Oracle, Java, PL/SQL, GTest, GCov, TDD, CI/CD, gdb/mdb debugging, performance profiling, telecom systems, GSM/LTE, satellite communications, aviation surveillance, UAV/drone surveillance, autonomous navigation, and VoIP air traffic control.",
         projects: "My main professional work spans dual-mode GSM/LTE core network components in C++17 at Lynk Global; aviation surveillance and UAV/drone systems at L3Harris; autonomous surface vessel navigation at Gibbs & Cox; and high-volume telecom billing at Openet for Verizon, AT&T, and Sprint. On the personal side I built Yalabeena — a full-stack booking platform with Flutter, C++17 Drogon, and PostgreSQL.",
         satellite: "At Lynk Global I architect and lead the satellite and ground GSM/LTE core network in C++17. The system covers multiple core network elements with plugin-based design, runtime-swappable database backends (MongoDB, PostgreSQL, SQLite3), async thread-pool processing, and full GTest/GCov coverage. I also own the complete CI/CD release pipeline and container lifecycle infrastructure supporting multi-arch (amd64/aarch64) satellite deployments.",
         yalabeena: "Yalabeena, originally BMyGst, is my personal project — not the main professional thread. It demonstrates full-stack product ownership: Flutter web/mobile UI, Provider/go_router app structure, C++17 Drogon REST backend, plugin-based route modules, PostgreSQL persistence, JWT/session management, host calendars, cart/checkout, credits, refunds, Braintree reconciliation, Google Calendar/email integrations, Dockerized development, and pytest E2E coverage. You can try it at https://www.yalabeena.com/",
@@ -1746,8 +2104,15 @@
         if (profile[key]) el.setAttribute("href", profile[key]);
       });
 
-      document.getElementById("skill-cloud").innerHTML = profile.skills
-        .map((skill) => `<span class="chip">${escapeHtml(skill)}</span>`)
+      document.getElementById("skill-groups").innerHTML = profile.skillGroups
+        .map((group) => `
+          <div class="skill-group">
+            <h4>${escapeHtml(group.label)}</h4>
+            <div class="skill-cloud">
+              ${group.skills.map((skill) => `<span class="chip">${escapeHtml(skill)}</span>`).join("")}
+            </div>
+          </div>
+        `)
         .join("");
 
       document.getElementById("timeline").innerHTML = profile.experience
@@ -1771,6 +2136,7 @@
             <div>
               <h3>${escapeHtml(project.title)}</h3>
               <p>${escapeHtml(project.body)}</p>
+              ${renderProjectTags(project.tags)}
               ${renderProjectLinks(project.links)}
             </div>
           </article>
@@ -1784,6 +2150,7 @@
             <div>
               <h3>${escapeHtml(project.title)}</h3>
               <p>${escapeHtml(project.body)}</p>
+              ${renderProjectTags(project.tags)}
               ${renderProjectLinks(project.links)}
             </div>
           </article>
@@ -1798,6 +2165,15 @@
           ${links.map((link) => `
             <a class="project-link" href="${escapeAttribute(link.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.label)}</a>
           `).join("")}
+        </div>
+      `;
+    }
+
+    function renderProjectTags(tags = []) {
+      if (!tags.length) return "";
+      return `
+        <div class="project-tags">
+          ${tags.map((tag) => `<span class="project-tag">${escapeHtml(tag)}</span>`).join("")}
         </div>
       `;
     }
@@ -1819,6 +2195,11 @@
     const promptWrap = document.getElementById("quick-prompts");
     const chatShell = document.getElementById("chat-shell");
     const themeToggle = document.getElementById("theme-toggle");
+    const progressBar = document.getElementById("scroll-progress-bar");
+    const navSectionLinks = Array.from(document.querySelectorAll('.nav-links a[href^="#"]:not([href="#"])'));
+    const trackedSections = navSectionLinks
+      .map((link) => document.querySelector(link.getAttribute("href")))
+      .filter(Boolean);
 
     function applyTheme(theme) {
       const selected = theme === "light" ? "light" : "dark";
@@ -1832,6 +2213,21 @@
       applyTheme(document.body.dataset.theme === "light" ? "dark" : "light");
     });
 
+    function updateScrollUi() {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = maxScroll > 0 ? (window.scrollY / maxScroll) * 100 : 0;
+      progressBar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+
+      const visibleSections = trackedSections.filter((section) => section.getBoundingClientRect().top <= 130);
+      const current = visibleSections[visibleSections.length - 1];
+
+      navSectionLinks.forEach((link) => {
+        link.classList.toggle("is-active", current && link.getAttribute("href") === `#${current.id}`);
+      });
+    }
+
+    window.addEventListener("scroll", updateScrollUi, { passive: true });
+    window.addEventListener("resize", updateScrollUi);
 
     function addMessage(text, type = "bot") {
       const bubble = document.createElement("div");
@@ -1904,6 +2300,7 @@
 
     applyTheme(localStorage.getItem("resume_theme") || "dark");
     applyProfile();
+    updateScrollUi();
   </script>
 </body>
 </html>
