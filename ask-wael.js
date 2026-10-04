@@ -130,7 +130,7 @@ window.ASK_WAEL = [
 {g:'Personal', id:'education', q:'What is your education?', k:'educat|degree|university|school|stud(y|ied)|nyu|master|bachelor|gpa',
  a:"An M.S. in Electrical Engineering from the NYU Tandon School of Engineering, with a GPA of 3.87, and a B.S. in Computer Engineering from Ain Shams University in Cairo."},
 {g:'Personal', id:'location', q:'Where are you based?', k:'located|location|where (are|do) you|based|live|relocat|remote|time ?zone',
- a:"The Washington, D.C. area. For anything about location or availability, email me at wael.bahgat@gmail.com."},
+ a:"Bethesda, Maryland, just outside Washington, D.C. For anything about location or availability, email me at wael.bahgat@gmail.com."},
 {g:'Personal', id:'contact', q:'How can I contact you?', k:'contact|e-?mail|reach|get in touch|linkedin|resume|résumé|\\bcv\\b|phone',
  a:"By email at wael.bahgat@gmail.com, or on LinkedIn. My résumé is the PDF linked at the top of the page."},
 
